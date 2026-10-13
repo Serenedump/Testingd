@@ -636,7 +636,7 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
     <section class="card pstage" aria-label="Pet Boi">
       <div class="pbox"><p id="pet-bub" class="pbub" role="status" hidden></p><button type="button" id="pet-big" aria-label="Pet Boi"></button></div>
       <div class="pstyle" id="pStyle" role="group" aria-label="Choose your Boi"><p class="pstl">Choose your Boi</p><div class="pstg" id="pStyleGrid"></div><p class="pstm" id="pStyleMsg" role="status" aria-live="polite">Tap one, then press Save.</p></div><div class="pname"><label for="pname">Name tag</label><input id="pname" type="text" maxlength="12" placeholder="Boi" autocomplete="off" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
-      <div class="ppick" id="ppick" role="group" aria-label="Choose a pet"></div><div class="ppick"><button type="button" id="pallbtn" aria-pressed="false" aria-controls="pall">👀 All pets</button></div><div class="pall" id="pall" hidden></div><div class="ppick" id="pgender" role="group" aria-label="Boy or girl"><button type="button" data-g="chibi" aria-pressed="true">🧑 Chibi</button><button type="button" data-g="boy" aria-pressed="false">👦 Boy</button><button type="button" data-g="girl" aria-pressed="false">👧 Girl</button></div>
+      <div class="ppick" id="ppick" role="group" aria-label="Choose a pet"></div><div class="ppick"><button type="button" id="pallbtn" aria-pressed="false" aria-controls="pall">👀 All pets</button></div><div class="pall" id="pall" hidden></div><div class="ppick" id="pgender" role="group" aria-label="Boy or girl"><button type="button" data-g="chibi" aria-pressed="true">👦 Boy</button><button type="button" data-g="girl" aria-pressed="false">👧 Girl</button></div>
       <div class="pctl"><button type="button" data-a="fit">👕 Outfit</button><button type="button" data-a="acc">🎩 Accessory</button><button type="button" data-m="1" aria-pressed="false">🏍️ Motor</button><button type="button" data-k="1" aria-pressed="false" hidden>💄 Makeup</button><button type="button" data-w="1" aria-pressed="false" hidden>💇 Wig</button><button type="button" id="psave" class="go">💾 Save</button></div>
       <div class="ppicker" id="ppicker" hidden></div><div class="ppicker" id="pmotor" hidden></div><div class="ppicker" id="pmakeup" hidden></div><div class="ppicker" id="pwig" hidden></div><div class="ppicker" id="pwigArt" hidden></div>
       <p class="phint">Tap Boi to pet him. Finish your list to earn ⭐ and unlock outfits. Tap Save to back up to the cloud ☁️ (sign in first).</p>
@@ -2238,7 +2238,7 @@ function drawRoom(){if(!proom)return;if(newRoom().length)save();proom.textConten
 var WS=[{id:"long",n:"Long Waves"},{id:"bob",n:"Bob"},{id:"pig",n:"Pigtails"},{id:"none",n:"No wig"}],WC=[{n:"Chestnut",c:"#6b402a",h:"#a2704f"},{n:"Black",c:"#2b2420",h:"#5a4d46"},{n:"Blonde",c:"#e3b95a",h:"#f6dc92"},{n:"Pink",c:"#ff8fc0",h:"#ffc2dd"},{n:"Lavender",c:"#a98cf5",h:"#cdbcff"}],WG={s:"long",c:0};
 try{var _wg=JSON.parse(localStorage.getItem("boi-wig-v1")||"null");if(_wg&&WS.some(function(x){return x.id===_wg.s}))WG.s=_wg.s;if(_wg&&_wg.c>=0&&_wg.c<WC.length)WG.c=_wg.c|0}catch(e){}
 var GN="chibi",MKS={},PVM={},PJG={id:"pjg",n:"Pajamas",k:"pj",a:"#ffa3c8",b:"#e8679f",e:"",ec:"#fff",r:"",u:0};
-try{var _g0=localStorage.getItem("boi-gender-v1");if(_g0==="boy")GN="boy";else if(_g0==="girl")GN="girl";var _mk=JSON.parse(localStorage.getItem("boi-makeup-v1")||"{}");if(_mk&&typeof _mk==="object")Object.keys(_mk).slice(0,12).forEach(function(k){if(_mk[k]===true)MKS[k]=true})}catch(e){}
+try{var _g0=localStorage.getItem("boi-gender-v1");if(_g0==="girl")GN="girl";var _mk=JSON.parse(localStorage.getItem("boi-makeup-v1")||"{}");if(_mk&&typeof _mk==="object")Object.keys(_mk).slice(0,12).forEach(function(k){if(_mk[k]===true)MKS[k]=true})}catch(e){}
 if(GN==="girl"&&PN==="Boi")PN="Girl";
 /* ===== Motor colors + sleep mode (pajamas, off the motor, in bed) ===== */
 var MOT=[{n:"Red Rider",a:"#d9232a",b:"#ff6b70",c:"#a81c22",d:"#7a5b46"},{n:"Orange Sunset",a:"#ff8a2e",b:"#ffc27a",c:"#d96a12",d:"#5b3d2a"},{n:"Sky Blue",a:"#3d8bff",b:"#8dc0ff",c:"#2468d4",d:"#4a4f5c"},{n:"Mint Fresh",a:"#35c9a0",b:"#8ff0d2",c:"#1f9c7a",d:"#7a5b46"},{n:"Bubblegum",a:"#ff6fa5",b:"#ffb3d0",c:"#d94d85",d:"#fff1f5"},{n:"Lavender",a:"#9a7bff",b:"#c8b6ff",c:"#6f52d4",d:"#4a3a66"},{n:"Midnight",a:"#2b2a33",b:"#6a6a80",c:"#14131a",d:"#d9232a"},{n:"Gold",a:"#f2b705",b:"#ffe27a",c:"#c48f00",d:"#4a3326"}],MI=0,SLP=false,RMS=false,NOMOT=false,_sc0=scooter,_bg0=bag;
@@ -2293,7 +2293,7 @@ var _ac3=accessory;function wigSVG(){if(WG.s==="none")return "";var c=WC[WG.c],f
  return s+L("M48 98 Q36 38 100 32 Q164 38 152 98 L148 72 Q124 60 100 72 Q76 60 52 72Z")+'<path d="M70 44 Q100 34 128 46" stroke="'+c.h+'" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85"/>'}
 accessory=function(id){return GN==="girl"?wigSVG()+girlLayer()+_ac3(id)+girlBow():_ac3(id)};
 (function(){var pg=$("pgender"),wb=document.querySelector("#pgPet [data-w]"),pw=$("pwig");if(!pg||!wb||!pw)return;
- function pick(){if(GN==="chibi"){chHairPick(pw);return}pw.textContent="";pw.appendChild(el("p","pkh","Wig: "+WS.filter(function(x){return x.id===WG.s})[0].n+" \u00b7 "+WC[WG.c].n));
+ function pick(){if(GN==="chibi"){chHairPick(pw);return}pw.textContent="";if(GN==="girl")return;pw.appendChild(el("p","pkh","Wig: "+WS.filter(function(x){return x.id===WG.s})[0].n+" \u00b7 "+WC[WG.c].n));
   var g=el("div","pkg");WS.forEach(function(x){var b=el("button",x.id===WG.s?"on":null,x.n);b.type="button";b.onclick=function(){WG.s=x.id;sv();pick()};g.appendChild(b)});pw.appendChild(g);
   pw.appendChild(el("p","prl","Color"));var w=el("div","prw");WC.forEach(function(x,i){var b=el("button",null);b.type="button";b.title=x.n;b.setAttribute("aria-label",x.n);b.style.background=x.c;b.setAttribute("aria-pressed",String(i===WG.c));b.onclick=function(){WG.c=i;if(WG.s==="none")WG.s="long";sv();pick()};w.appendChild(b)});pw.appendChild(w)}
  function sv(){try{localStorage.setItem("boi-wig-v1",JSON.stringify(WG))}catch(e){}draw();drawRoom()}
@@ -4309,24 +4309,25 @@ function store(){try{if(ST.i>=0)localStorage.setItem(KEY,JSON.stringify(ST));els
 function src(s,i){return"data:image/webp;base64,"+D[s][i]}
 function girl(){var b=document.querySelector('#pgender [data-g="girl"]');return!b||b.getAttribute("aria-pressed")==="true"}
 function apply(){
- var on=ST.i>=0&&girl();pgp.classList.toggle("wigart",on);
- var f=big.firstElementChild;
- if(on){var u=src(ST.s,ST.i);if(!(f&&f.className==="waimg"&&big.childNodes.length===1)){big.innerHTML="";f=document.createElement("img");f.className="waimg";big.appendChild(f)}if(f.getAttribute("src")!==u){f.src=u;f.alt=NM[ST.i]}}
- else if(f&&f.className==="waimg"){big.innerHTML=""}
+ pgp.classList.toggle("wigart",ST.i>=0&&girl());
+ try{draw()}catch(e){}try{drawRoom()}catch(e){}
 }
+window.WGA={on:function(){return ST.i>=0&&typeof GN!=="undefined"&&GN==="girl"&&!(typeof SLP!=="undefined"&&SLP)},src:function(){return src(ST.s,ST.i)},key:function(){return ST.i>=0?"|wa"+ST.s+ST.i:""}};
+var _pWA=pup;pup=function(s){if(!window.WGA.on())return _pWA(s);var m=(s&&s.mood)||"happy";
+ return '<g class="pq-all"><ellipse cx="100" cy="189" rx="46" ry="5" fill="#b06a80" opacity=".18"/><image href="'+src(ST.s,ST.i)+'" x="0" y="8" width="200" height="180" preserveAspectRatio="xMidYMax meet"/></g>'};
+var _skWA=shareKey;shareKey=function(){return _skWA()+window.WGA.key()};
 function clearPose(){var g=$("pStyleGrid");if(g&&g.firstElementChild&&localStorage.getItem("boi-style-v1"))g.firstElementChild.click()}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 function render(){
  box.textContent="";
- box.appendChild(el("p","wah",ST.i>=0?"Hairstyle: "+NM[ST.i]+" ("+SETS[ST.s].replace(/^\S+\s/,"")+")":"Hairstyle art: none (using the wig above)"));
+ box.appendChild(el("p","wah",ST.i>=0?"Wig: "+NM[ST.i]+" ("+SETS[ST.s].replace(/^\S+\s/,"")+")":"Wig: Original"));
  var o=el("div","was");Object.keys(SETS).forEach(function(k){var b=el("button",null,SETS[k]);b.type="button";b.setAttribute("aria-pressed",String(k===ST.s));b.onclick=function(){ST.s=k;if(ST.i>=0){store();apply()}render()};o.appendChild(b)});box.appendChild(o);
- var g=el("div","wag"),n=el("button",null);n.type="button";n.setAttribute("aria-pressed",String(ST.i<0));n.innerHTML="<b style='font-size:1.3rem;line-height:1.4'>\u274c</b><span>No art</span>";n.onclick=function(){ST.i=-1;store();msg="Back to the normal wig. Press Save to keep it.";apply();render()};g.appendChild(n);
+ var g=el("div","wag"),n=el("button",null);n.type="button";n.setAttribute("aria-pressed",String(ST.i<0));n.innerHTML="<b style='font-size:1.3rem;line-height:1.4'>\u274c</b><span>Original</span>";n.onclick=function(){ST.i=-1;store();msg="Original look is back. Press Save to keep it.";apply();render()};g.appendChild(n);
  for(var i=0;i<12;i++)(function(i){var b=el("button",null);b.type="button";b.setAttribute("aria-label",NM[i]);b.setAttribute("aria-pressed",String(i===ST.i));var im=document.createElement("img");im.alt="";im.src=src(ST.s,i);b.appendChild(im);b.appendChild(el("span",null,NM[i]));
   b.onclick=function(){clearPose();ST.i=i;store();msg=NM[i]+" picked. Press Save to keep it on your account.";apply();render()};g.appendChild(b)})(i);
  box.appendChild(g);box.appendChild(el("p","wam",msg||"Tap a hairstyle, then press Save."));
 }
 new MutationObserver(function(){box.hidden=pw.hidden;if(!pw.hidden)render()}).observe(pw,{attributes:true,attributeFilter:["hidden"]});
-new MutationObserver(function(){if(ST.i>=0&&girl()){var f=big.firstElementChild;if(!(f&&f.className==="waimg"&&big.childNodes.length===1))apply()}}).observe(big,{childList:true});
 var pg=$("pgender");if(pg)pg.addEventListener("click",function(){setTimeout(apply,60)});
 var sg=$("pStyleGrid");if(sg)sg.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(!b)return;var idx=[].indexOf.call(sg.children,b);if(idx>0&&ST.i>=0){ST.i=-1;store();apply();render()}},true);
 box.hidden=pw.hidden;apply();
