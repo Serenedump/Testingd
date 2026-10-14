@@ -319,6 +319,7 @@ section[aria-label="Calendar"] .head,.legend{background:var(--panel);border:1px 
 html[data-fnt] body,html[data-fnt] button,html[data-fnt] input,html[data-fnt] select,html[data-fnt] textarea{font-family:var(--bf)!important}
 html[data-fnt] .hero h1,html[data-fnt] .hero h1 span,html[data-fnt] .head h2,html[data-fnt] #month,html[data-fnt] #dayTitle{font-family:var(--hf)!important}
 #epet,#epet-show,#epet-panel{display:none!important}
+#pgPet #epet-panel.inpage{display:block!important}
 #ppick,#pall,#pallbtn,.ppick:has(#pallbtn){display:none!important}
 </style>
 <link rel="manifest" href="manifest.json">
@@ -565,7 +566,7 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
 .pstg button[aria-pressed="true"]{border-color:var(--red);box-shadow:0 3px 0 var(--redd);background:color-mix(in srgb,var(--red) 10%,var(--panel))}
 .pstm{margin:6px 0 0;font-size:.82rem;color:var(--mute)}
 #pet-big .pstimg{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
-#pgPet.posed [data-a],#pgPet.posed [data-k],#pgPet.posed [data-w],#pgPet.posed #pgender,#pgPet.posed .ppicker:not(#pmotor){display:none!important}
+#pgPet.posed [data-a="acc"],#pgPet.posed [data-k],#pgPet.posed [data-w],#pgPet.posed #pgender,#pgPet.posed .ppicker:not(#ppicker){display:none!important}
 </style>
 <style>
 /* Hairstyle art (wigs) */
@@ -581,11 +582,11 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
 #pwigArt .wam{margin:8px 0 0;text-align:center;font-size:.82rem;color:var(--mute)}
 #pet-big .waimg{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
 #pgPet.wigart [data-m],#pgPet.wigart #pmotor{display:none!important}
-#pmotor .mpl{margin:12px 0 6px;font-weight:800;font-size:.9rem;text-align:center}
-#pmotor .mpg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:end}
-#pmotor .mpg button{padding:4px 2px;min-height:64px;border-radius:14px;background:var(--panel);border:2px solid var(--line);line-height:0;display:flex;align-items:flex-end;justify-content:center}
-#pmotor .mpg button img{width:100%;height:60px;object-fit:contain;display:block;pointer-events:none}
-#pmotor .mpg button[aria-pressed="true"]{border-color:var(--red);box-shadow:0 3px 0 var(--redd);background:color-mix(in srgb,var(--red) 10%,var(--panel))}
+#pmotor .mpl,#ppicker .mpl{margin:12px 0 6px;font-weight:800;font-size:.9rem;text-align:center}
+#pmotor .mpg,#ppicker .mpg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:end}
+#pmotor .mpg button,#ppicker .mpg button{padding:4px 2px;min-height:64px;border-radius:14px;background:var(--panel);border:2px solid var(--line);line-height:0;display:flex;align-items:flex-end;justify-content:center}
+#pmotor .mpg button img,#ppicker .mpg button img{width:100%;height:60px;object-fit:contain;display:block;pointer-events:none}
+#pmotor .mpg button[aria-pressed="true"],#ppicker .mpg button[aria-pressed="true"]{border-color:var(--red);box-shadow:0 3px 0 var(--redd);background:color-mix(in srgb,var(--red) 10%,var(--panel))}
 </style>
 <style>#pwig .chh{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}#pwig .chh button{position:relative;aspect-ratio:1;padding:0;border-radius:14px;border:2px solid var(--line);background-color:var(--panel);background-size:150% auto;background-position:23% 0;background-repeat:no-repeat;overflow:hidden}#pwig .chh button span{position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.86);color:#111;font-size:.6rem;font-weight:800;line-height:1.15;padding:2px}#pwig .chh button[aria-pressed="true"]{border-color:var(--red);box-shadow:0 3px 0 var(--redd)}</style>
 </head>
@@ -641,8 +642,8 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
       <div class="pbox"><p id="pet-bub" class="pbub" role="status" hidden></p><button type="button" id="pet-big" aria-label="Chibi"></button></div>
       <div class="pstyle" id="pStyle" role="group" aria-label="Choose your Boi"><p class="pstl">Choose your Boi</p><div class="pstg" id="pStyleGrid"></div><p class="pstm" id="pStyleMsg" role="status" aria-live="polite">Tap one, then press Save.</p></div><div class="pname"><label for="pname">Name tag</label><input id="pname" type="text" maxlength="12" placeholder="Boi" autocomplete="off" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
       <div class="ppick" id="ppick" role="group" aria-label="Choose a pet"></div><div class="ppick"><button type="button" id="pallbtn" aria-pressed="false" aria-controls="pall">👀 All pets</button></div><div class="pall" id="pall" hidden></div><div class="ppick" id="pgender" role="group" aria-label="Boy or girl"><button type="button" data-g="chibi" aria-pressed="true">👦 Boy</button><button type="button" data-g="girl" aria-pressed="false">👧 Girl</button></div>
-      <div class="pctl"><button type="button" data-a="fit">👕 Outfit</button><button type="button" data-a="acc">🎩 Accessory</button><button type="button" data-m="1" aria-pressed="false">🏍️ Motor</button><button type="button" data-k="1" aria-pressed="false" hidden>💄 Makeup</button><button type="button" data-w="1" aria-pressed="false" hidden>💇 Wig</button><button type="button" id="psave" class="go">💾 Save</button></div>
-      <div class="ppicker" id="ppicker" hidden></div><div class="ppicker" id="pmotor" hidden></div><div class="ppicker" id="pmakeup" hidden></div><div class="ppicker" id="pwig" hidden></div><div class="ppicker" id="pwigArt" hidden></div>
+      <div class="pctl"><button type="button" data-a="fit">👕 Outfit</button><button type="button" data-a="acc">🎩 Accessory</button><button type="button" data-k="1" aria-pressed="false" hidden>💄 Makeup</button><button type="button" data-w="1" aria-pressed="false" hidden>💇 Wig</button><button type="button" id="psave" class="go">💾 Save</button></div>
+      <div class="ppicker" id="ppicker" hidden></div><div class="ppicker" id="pmakeup" hidden></div><div class="ppicker" id="pwig" hidden></div><div class="ppicker" id="pwigArt" hidden></div>
       <p class="phint">Finish your list to earn ⭐ and unlock outfits. Tap Save to back up to the cloud ☁️ (sign in first).</p>
     </section>
     <section class="card proom" id="proom" aria-label="Boi's Room"></section>
@@ -2213,12 +2214,12 @@ var _pgMission=goMission;goMission=function(){if(pgIn){var t=document.querySelec
   pkb.appendChild(h);
   var g=el("div","pkg");
   list.forEach(function(x){var un=x.u<=S.stars,isPv=pv===x&&!un,b=el("button",isPv?"pv":(x===cur&&!pv?"on":null),un?x.n:"\ud83d\udd12 "+x.n+" \u00b7 "+x.u+" \u2b50");b.type="button";
-   b.onclick=function(){var i=list.indexOf(x);
+   b.onclick=function(){var i=list.indexOf(x);if(isO&&window.BOIPOSE&&window.BOIPOSE.get()>0)window.BOIPOSE.set(0);
     if(un){if(isO){PVO=null;S.oi=i}else{PVA=null;S.ai=i}save();react("excited",x.n+"!",2600)}
     else{if(isO)PVO=i;else PVA=i;react("excited","Preview: "+x.n+" (needs "+x.u+" \u2b50)",3400)}
     drawPicker()};
    g.appendChild(b)});
-  pkb.appendChild(g)}
+  pkb.appendChild(g);if(isO&&window.MOTORSEC)window.MOTORSEC(pkb,drawPicker)}
  document.querySelectorAll("#pgPet [data-a]").forEach(function(b){b.setAttribute("aria-pressed","false");b.onclick=function(){if(b.dataset.a==="fit")PVO=null;else PVA=null;PK=(PK===b.dataset.a)?null:b.dataset.a;drawPicker()}});
  var svb=$("psave");if(svb)svb.onclick=function(){save();var C=window.CloudSave;if(!C){react("excited","Saved! ✅",2400);return}react("excited","Saving… ☁️",1500);C.push().then(function(){react("excited","Saved to the cloud ☁️✅",3000)}).catch(function(e){react("excited",e&&e.message==="signin"?"Saved on this device. Sign in to save to the cloud ☁️":"Saved on this device. Cloud save failed, try again.",3800)})};
 })();
@@ -2297,11 +2298,19 @@ var _dr0=drawRoom;drawRoom=function(){_dr0();if(!proom)return;var hd=proom.query
  if(hd&&eb){var w=el("div");w.style.cssText="display:flex;gap:6px";var b=el("button",null,SLP?"\u2600\ufe0f Wake up":"\ud83d\ude34 Sleep");b.type="button";b.onclick=toggleSleep;hd.insertBefore(w,eb);w.appendChild(b);w.appendChild(eb)}
  var rb=proom.querySelector(".rboi2");if(SLP&&rb)rb.remove();
  var n=proom.querySelector(".prn");if(SLP&&n)n.textContent=pnm("Boi got off his motor, changed into pajamas and is fast asleep. Tap Wake up when you want him back.")};
-(function(){var pm=$("pmotor"),mb=document.querySelector("#pgPet [data-m]");if(!pm||!mb)return;
- function pick(){pm.textContent="";var h=el("p","pkh",null);h.appendChild(document.createTextNode("Pick Boi's ride. Now: "));h.appendChild(el("b",null,MOT[MI].n));pm.appendChild(h);
-  var g=el("div","pkg");var fb=el("button",window.PETRIDE?null:"on");fb.type="button";fb.appendChild(document.createTextNode("\ud83d\udeb6 On foot"));fb.onclick=function(){window.PETRIDE=false;try{localStorage.setItem("boi-pet-ride","0")}catch(x){}draw();pick()};g.appendChild(fb);MOT.forEach(function(m,i){var b=el("button",(window.PETRIDE&&i===MI)?"on":null);b.type="button";var d=el("span",null,"\u25cf ");d.style.color=m.a;b.appendChild(d);b.appendChild(document.createTextNode(m.n));
-   b.onclick=function(){MI=i;window.PETRIDE=true;try{localStorage.setItem("boi-pet-ride","1")}catch(e){}try{localStorage.setItem("boi-motor-v1",String(i))}catch(e){}try{say("Vroom vroom! New ride!",2600)}catch(x){}draw();drawRoom();pick()};g.appendChild(b)});pm.appendChild(g);var PL=window.BOIPOSE?window.BOIPOSE.list():[];if(PL.length){var pl=el("p","mpl","\ud83c\udfcd\ufe0f Motor poses"),pg2=el("div","mpg");pm.appendChild(pl);PL.forEach(function(q){var pb=el("button",null);pb.type="button";pb.setAttribute("aria-label",q.name);pb.setAttribute("aria-pressed",String(window.BOIPOSE.get()===q.i));var im=document.createElement("img");im.alt="";im.src=q.src;pb.appendChild(im);pb.onclick=function(){window.BOIPOSE.set(q.i);pick()};pg2.appendChild(pb)});pm.appendChild(pg2)}}
- mb.onclick=function(){var o=pm.hidden;pm.hidden=!o;mb.setAttribute("aria-pressed",String(o));if(o)pick()}})();
+(function(){
+ window.MOTORSEC=function(box,redraw){
+  box.appendChild(el("p","mpl","\ud83c\udfcd\ufe0f Motor outfit"));
+  var g=el("div","pkg"),fb=el("button",window.PETRIDE?null:"on");fb.type="button";fb.appendChild(document.createTextNode("\ud83d\udeb6 On foot"));
+  fb.onclick=function(){window.PETRIDE=false;try{localStorage.setItem("boi-pet-ride","0")}catch(x){}draw();redraw()};g.appendChild(fb);
+  MOT.forEach(function(m,i){var b=el("button",(window.PETRIDE&&i===MI)?"on":null);b.type="button";var d=el("span",null,"\u25cf ");d.style.color=m.a;b.appendChild(d);b.appendChild(document.createTextNode(m.n));
+   b.onclick=function(){MI=i;window.PETRIDE=true;try{localStorage.setItem("boi-pet-ride","1")}catch(e){}try{localStorage.setItem("boi-motor-v1",String(i))}catch(e){}try{say("Vroom vroom! New ride!",2600)}catch(x){}draw();drawRoom();redraw()};g.appendChild(b)});
+  box.appendChild(g);
+  var PL=window.BOIPOSE?window.BOIPOSE.list():[];
+  if(PL.length){box.appendChild(el("p","mpl","\ud83c\udfcd\ufe0f Motor poses"));var pg2=el("div","mpg");
+   PL.forEach(function(q){var pb=el("button",null);pb.type="button";pb.setAttribute("aria-label",q.name);pb.setAttribute("aria-pressed",String(window.BOIPOSE.get()===q.i));var im=document.createElement("img");im.alt="";im.src=q.src;pb.appendChild(im);pb.onclick=function(){window.BOIPOSE.set(q.i);redraw()};pg2.appendChild(pb)});
+   box.appendChild(pg2)}
+ }})();
 /* ===== Girl mode + makeup kits ===== */
 var MK=[{id:"blush",n:"Blush Kit",u:1},{id:"lash",n:"Lash Lift",u:3},{id:"shadow",n:"Eyeshadow Palette",u:7},{id:"glitter",n:"Glitter Dust",u:10},{id:"gems",n:"Face Gems",u:14}];
 function mkOn(m){return !!((MKS[m.id]&&m.u<=S.stars)||PVM[m.id])}
@@ -2327,7 +2336,7 @@ accessory=function(id){return GN==="girl"?wigSVG()+girlLayer()+_ac3(id)+girlBow(
  function sync(){wb.hidden=GN!=="girl"&&GN!=="chibi";wb.textContent="\ud83d\udc87 Hair";pw.hidden=true;wb.setAttribute("aria-pressed","false")}
  wb.onclick=function(){var o=pw.hidden;pw.hidden=!o;wb.setAttribute("aria-pressed",String(o));if(o)pick()};
  pg.addEventListener("click",function(){setTimeout(sync,0)});sync()})();
-window.WGAHOOK={redraw:function(){try{draw()}catch(e){}try{drawRoom()}catch(e){}}};
+window.WGAHOOK={redraw:function(){try{draw()}catch(e){}try{drawRoom()}catch(e){}},react:function(m,t,ms){try{react(m,t,ms)}catch(e){}}};
 var _pWA=pup;pup=function(s){var w=window.WGA;if(!w||GN!=="girl"||SLP||!w.on())return _pWA(s);var _n=NOMOT;NOMOT=true;try{return _pWA(s)}finally{NOMOT=_n}};
 var _skWA=shareKey;shareKey=function(){return _skWA()+(window.WGA&&GN==="girl"&&!SLP?window.WGA.key():"")};
 (function(){var pg=$("pgender"),mb=document.querySelector("#pgPet [data-k]"),pm=$("pmakeup");if(!pg||!mb||!pm)return;
@@ -3122,9 +3131,9 @@ function chPicker(kind,box,redraw){var isO=kind==="fit",list=isO?CHO:CHA,key=isO
  box.appendChild(h);var g=el("div","pkg");
  list.forEach(function(x,i){if(x.hid||(x.g&&GN!=="girl"))return;var un=x.u<=S.stars,isPv=pvi===i&&!un,b=el("button",isPv?"pv":(i===cur&&pvi==null?"on":null),un?x.n:"\ud83d\udd12 "+x.n+" \u00b7 "+x.u+" \u2b50");b.type="button";
   if(isO&&x.c){var d=el("span",null,"\u25cf ");d.style.color=x.c;b.insertBefore(d,b.firstChild)}
-  b.onclick=function(){if(un){CHPV[key]=null;CHS[key]=i;chSave();react(pick(["proud","happy","excited"]),pick([x.n+"! Bagay ba?","Ang astig nito!","Bagay sa akin, di ba?","Looks good!"]),2400)}else{CHPV[key]=i;react("curious","Preview: "+x.n+" (needs "+x.u+" \u2b50)",3400)}
+  b.onclick=function(){if(isO&&window.BOIPOSE&&window.BOIPOSE.get()>0)window.BOIPOSE.set(0);if(un){CHPV[key]=null;CHS[key]=i;chSave();react(pick(["proud","happy","excited"]),pick([x.n+"! Bagay ba?","Ang astig nito!","Bagay sa akin, di ba?","Looks good!"]),2400)}else{CHPV[key]=i;react("curious","Preview: "+x.n+" (needs "+x.u+" \u2b50)",3400)}
    if(isO)chEnsure(CHS.h,un?i:i);redraw()};g.appendChild(b)});
- box.appendChild(g)}
+ box.appendChild(g);if(isO&&window.MOTORSEC)window.MOTORSEC(box,redraw)}
 function chHairPick(pw){pw.textContent="";pw.appendChild(el("p","pkh","Hair: "+CHNAMES[CHS.h]));var g=el("div","chh");
  CHNAMES.forEach(function(n,i){var b=el("button",null);b.type="button";b.setAttribute("aria-label",n);b.setAttribute("aria-pressed",String(i===CHS.h));b.style.backgroundImage="url("+chRaw(i)+")";b.appendChild(el("span",null,n));
   b.onclick=function(){CHS.h=i;chSave();chEnsure(i,CHPV.o!=null?CHPV.o:CHS.o);react(pick(["proud","happy","shy"]),pick([n+"! Bagong look!","Ayos ba ang buhok ko?","Ang gwapo ko ba?".replace("gwapo",GN==="girl"?"ganda":"gwapo")]),2400);chHairPick(pw)};g.appendChild(b)});pw.appendChild(g);pw.appendChild(el("p","prl","Hair color: "+CHHC[CHS.c].n));var cw=el("div","prw");CHHC.forEach(function(cc,ci){var cb=el("button",null);cb.type="button";cb.title=cc.n;cb.setAttribute("aria-label",cc.n);cb.style.background=cc.c;cb.setAttribute("aria-pressed",String(ci===CHS.c));cb.onclick=function(){CHS.c=ci;chSave();chHairBuild(CHS.h,ci);react(pick(["proud","happy","shy"]),pick([cc.n+" hair! Bagay ba?","Bagong kulay ng buhok!","Ayos ba ang kulay?"]),2400);chHairPick(pw);draw()};cw.appendChild(cb)});pw.appendChild(cw)}
@@ -4407,8 +4416,27 @@ var D={"a":["UklGRtAyAABXRUJQVlA4WAoAAAAQAAAA4AAA5QAAQUxQSG0GAAABsG3btmq30fqK5Gv
 var WP={"a":[[50.54,25.54,103.89,105.78],[48.59,15.62,109.3,118.68],[57.21,10.26,115.49,126.61],[49.93,23.04,107.1,107.62],[54.01,23.67,99.6,94.9],[51.21,19.31,106.24,98.01],[59.32,13.91,88.32,107.64],[58.56,23.91,86.86,100.01],[50.75,19.99,106.25,103.08],[54.4,6.71,110.61,108.74],[41.54,17.24,115.89,95.37],[44.66,19.76,110.86,108.03]],"b":[[47.52,22.53,106.24,97.09],[49.83,20.92,106.24,104.45],[61.53,11.25,102.64,110.41],[45.32,21.51,115.89,99.89],[45.87,16.05,110.84,102.25],[49.82,19.99,106.25,94.34],[56.77,10.83,99.27,105.78],[59.03,18.57,87.34,101.58],[48.03,21.44,110.86,88.82],[59.04,11.99,83.95,93.83],[47.06,16.87,110.87,97.0],[48.67,19.3,106.25,90.66]]};
 var KEY="boi-wigart-v1",$=function(i){return document.getElementById(i)},pw=$("pwig"),box=$("pwigArt"),big=$("pet-big"),pgp=$("pgPet");
 if(!pw||!box||!big||!pgp)return;
-var NM=["Curly Waves","Long Straight","High Ponytail","Pigtails","Wavy Bob","Soft Waves","Top Bun","Side Braid","Long Curls","Messy Bun","Bangs","Ombre"],SETS={a:"\ud83c\udfa7 Earmuffs",b:"\ud83c\udf38 No earmuffs"},ST={s:"a",i:-1},msg="",HID={9:1,10:1};
-try{var j=JSON.parse(localStorage.getItem(KEY)||"null");if(j&&(j.s==="a"||j.s==="b")&&j.i>=0&&j.i<12&&!HID[j.i]){ST.s=j.s;ST.i=j.i|0}}catch(e){}
+var NM=["Curly Waves","Long Straight","High Ponytail","Pigtails","Wavy Bob","Soft Waves","Top Bun","Side Braid","Long Curls","Messy Bun","Bangs","Ombre"],SETS={a:"\ud83c\udfa7 Earmuffs",b:"\ud83c\udf38 No earmuffs"},ST={s:"a",i:-1,c:0},msg="",HID={9:1,10:1};
+var HC=[{n:"Original",c:"#2b1b12"},{n:"Chestnut",c:"#8a5a34",h:25,s:.55,a:.2},{n:"Blonde",c:"#e6c15a",h:44,s:.8,a:.4},{n:"Ginger",c:"#d9622b",h:19,s:.85,a:.22},{n:"Pink",c:"#ff8fb8",h:338,s:.85,a:.4},{n:"Blue",c:"#4a78e0",h:221,s:.75,a:.24},{n:"Purple",c:"#8a5ee0",h:268,s:.65,a:.24},{n:"Green",c:"#3fae6a",h:145,s:.6,a:.22},{n:"Silver",c:"#c9ccd6",h:228,s:.1,a:.52}],HL={},HP={};
+function hs(r,g,b){r/=255;g/=255;b/=255;var mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2,d=mx-mn,h=0,s=0,dn=1-Math.abs(2*l-1);if(d>0){s=dn>1e-6?d/dn:0;h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;h*=60;if(h<0)h+=360}return[h,s,l]}
+function hr(h,s,l){var c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2,r=0,g=0,b=0;h=((h%360)+360)%360;if(h<60){r=c;g=x}else if(h<120){r=x;g=c}else if(h<180){g=c;b=x}else if(h<240){g=x;b=c}else if(h<300){r=x;b=c}else{r=c;b=x}return[Math.round((r+m)*255),Math.round((g+m)*255),Math.round((b+m)*255)]}
+function sm(x){x=x<0?0:x>1?1:x;return x*x*(3-2*x)}
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function build(sx,ix,c){var k=sx+ix+"|"+c,C=HC[c],q=WP[sx]&&WP[sx][ix];if(!C||!q||HL[k]!==undefined||HP[k])return;HP[k]=1;
+ var im=new Image();
+ im.onload=function(){try{var W=im.naturalWidth,H=im.naturalHeight,cv=document.createElement("canvas");cv.width=W;cv.height=H;var cx=cv.getContext("2d");cx.drawImage(im,0,0);var d=cx.getImageData(0,0,W,H),p=d.data,N=W*H,base=new Uint8Array(N),lab=new Int32Array(N),keep=new Uint8Array(N),stk=new Int32Array(N),n=0,k2,o,x,y,t,v,dx,dy;
+  for(k2=0;k2<N;k2++){o=k2*4;if(p[o+3]<8)continue;v=hs(p[o],p[o+1],p[o+2]);if(v[2]>=.58||v[2]<=.08||v[1]<=.12||(v[0]>45&&v[0]<345))continue;x=k2%W;y=(k2/W)|0;dx=(x+.5)/W*q[2]+q[0];dy=(y+.5)/H*q[3]+q[1];
+   if(Math.pow((dx-85.3)/9.6,2)+Math.pow((dy-75.4)/9.4,2)<1||Math.pow((dx-114.4)/9.6,2)+Math.pow((dy-75.4)/9.4,2)<1)continue;base[k2]=1}
+  for(k2=0;k2<N;k2++){if(!base[k2]||lab[k2])continue;n++;var sp=0,mem=[],c0,cx0,cy0,ddx,ddy,nx,ny,ni;stk[sp++]=k2;lab[k2]=n;
+   while(sp){c0=stk[--sp];mem.push(c0);cx0=c0%W;cy0=(c0/W)|0;for(ddy=-1;ddy<=1;ddy++)for(ddx=-1;ddx<=1;ddx++){nx=cx0+ddx;ny=cy0+ddy;if(nx<0||ny<0||nx>=W||ny>=H)continue;ni=ny*W+nx;if(base[ni]&&!lab[ni]){lab[ni]=n;stk[sp++]=ni}}}
+   if(mem.length>=300)for(t=0;t<mem.length;t++)keep[mem[t]]=1}
+  for(k2=0;k2<N;k2++){if(!keep[k2])continue;o=k2*4;v=hs(p[o],p[o+1],p[o+2]);var l=Math.max(0,Math.min(.96,v[2]+C.a*sm((v[2]-.05)/.22))),rg=hr(C.h,C.s,l);p[o]=rg[0];p[o+1]=rg[1];p[o+2]=rg[2]}
+  cx.putImageData(d,0,0);HL[k]=cv.toDataURL("image/webp",.92)}catch(e){HL[k]=""}
+  delete HP[k];try{window.WGAHOOK&&window.WGAHOOK.redraw()}catch(e){}};
+ im.onerror=function(){HL[k]="";delete HP[k]};im.src=src(sx,ix)}
+function colored(sx,ix,c){if(!c)return"";var k=sx+ix+"|"+c;if(HL[k]===undefined){build(sx,ix,c);return""}return HL[k]}
+function react(m,t){try{window.WGAHOOK&&window.WGAHOOK.react&&window.WGAHOOK.react(m,t,2400)}catch(e){}}
+try{var j=JSON.parse(localStorage.getItem(KEY)||"null");if(j&&(j.s==="a"||j.s==="b")&&j.i>=0&&j.i<12&&!HID[j.i]){ST.s=j.s;ST.i=j.i|0;var jc=+j.c;ST.c=jc>0&&jc<HC.length?Math.floor(jc):0}}catch(e){}
 function store(){try{if(ST.i>=0)localStorage.setItem(KEY,JSON.stringify(ST));else localStorage.removeItem(KEY)}catch(e){}}
 function src(s,i){return"data:image/webp;base64,"+D[s][i]}
 function girl(){var b=document.querySelector('#pgender [data-g="girl"]');return!b||b.getAttribute("aria-pressed")==="true"}
@@ -4416,7 +4444,7 @@ function apply(){
  pgp.classList.toggle("wigart",ST.i>=0&&girl());
  try{window.WGAHOOK&&window.WGAHOOK.redraw()}catch(e){}
 }
-window.WGA={on:function(){return ST.i>=0},head:function(){var q=WP[ST.s][ST.i];return q?{s:src(ST.s,ST.i),x:q[0],y:q[1],w:q[2],h:q[3]}:null},key:function(){return ST.i>=0?"|wa"+ST.s+ST.i:""}};
+window.WGA={on:function(){return ST.i>=0},head:function(){var q=WP[ST.s][ST.i];return q?{s:colored(ST.s,ST.i,ST.c)||src(ST.s,ST.i),x:q[0],y:q[1],w:q[2],h:q[3]}:null},key:function(){if(ST.i<0)return"";var k=ST.s+ST.i+"|"+ST.c;return"|wa"+ST.s+ST.i+(ST.c?"c"+ST.c+(HL[k]?"r":"p"):"")}};
 function clearPose(){var g=$("pStyleGrid");if(g&&g.firstElementChild&&localStorage.getItem("boi-style-v1"))g.firstElementChild.click()}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 function render(){
@@ -4425,8 +4453,12 @@ function render(){
  ST.s="a";
  var g=el("div","chh txt"),n=el("button",null);n.type="button";n.setAttribute("aria-pressed",String(ST.i<0));n.innerHTML="<span>Original</span>";n.onclick=function(){ST.i=-1;store();msg="Original look is back. Press Save to keep it.";apply();render()};g.appendChild(n);
  for(var i=0;i<12;i++)(function(i){if(HID[i])return;var b=el("button",null);b.type="button";b.setAttribute("aria-label",NM[i]);b.setAttribute("aria-pressed",String(i===ST.i));b.appendChild(el("span",null,NM[i]));
-  b.onclick=function(){clearPose();ST.i=i;store();msg=NM[i]+" picked. Press Save to keep it on your account.";apply();render()};g.appendChild(b)})(i);
- box.appendChild(g);box.appendChild(el("p","wam",msg||"Tap a hairstyle, then press Save."));
+  b.onclick=function(){clearPose();ST.i=i;store();msg=NM[i]+" picked. Press Save to keep it on your account.";apply();render();react(rnd(["proud","happy","shy"]),rnd([NM[i]+"! Bagong look!","Ayos ba ang buhok ko?","Ang ganda ko ba?"]))};g.appendChild(b)})(i);
+ box.appendChild(g);
+ var ec=ST.i>=0?ST.c:0;box.appendChild(el("p","prl","Hair color: "+HC[ec].n));
+ var cw=el("div","prw");HC.forEach(function(cc,ci){var cb=el("button",null);cb.type="button";cb.title=cc.n;cb.setAttribute("aria-label",cc.n);cb.style.background=cc.c;cb.setAttribute("aria-pressed",String(ci===ec));
+  cb.onclick=function(){if(ST.i<0&&ci>0){clearPose();ST.i=0}ST.c=ci;store();if(ST.i>=0&&ci)colored(ST.s,ST.i,ci);msg=(ci?cc.n+" hair":"Original color")+" picked. Press Save to keep it on your account.";apply();render();react(rnd(["proud","happy","shy"]),rnd([cc.n+" hair! Bagay ba?","Bagong kulay ng buhok!","Ayos ba ang kulay?"]))};cw.appendChild(cb)});
+ box.appendChild(cw);box.appendChild(el("p","wam",msg||"Tap a hairstyle or a hair color, then press Save."));
 }
 function vis(){box.hidden=pw.hidden||!girl();if(!box.hidden)render()}
 new MutationObserver(vis).observe(pw,{attributes:true,attributeFilter:["hidden"]});
