@@ -565,6 +565,10 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
 .pstg button.cls b{font-size:1.4rem}
 .pstg button[aria-pressed="true"]{border-color:var(--red);box-shadow:0 3px 0 var(--redd);background:color-mix(in srgb,var(--red) 10%,var(--panel))}
 .pstm{margin:6px 0 0;font-size:.82rem;color:var(--mute)}
+.pstm:empty{display:none}
+/* Boi reset button removed: heading + grid hidden (button stays in the DOM for the pose logic) */
+.pstyle .pstg{display:none}
+.pstyle .pstl{margin:0 0 4px}
 #pet-big .pstimg{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
 .pctl{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
 .pctl button{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:9px 12px;border-radius:999px;border:2px solid var(--line);background:var(--panel);color:var(--ink);font-weight:800;font-size:.95rem;box-shadow:0 3px 0 rgba(0,0,0,.08);white-space:nowrap}
@@ -646,7 +650,7 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
   <div id="pgPet" hidden>
     <section class="card pstage" aria-label="Chibi">
       <div class="pbox"><p id="pet-bub" class="pbub" role="status" hidden></p><button type="button" id="pet-big" aria-label="Chibi"></button></div>
-      <div class="pstyle" id="pStyle" role="group" aria-label="Choose your Chibi"><p class="pstl">Choose your Chibi</p><div class="pstg" id="pStyleGrid"></div><p class="pstm" id="pStyleMsg" role="status" aria-live="polite">Tap one, then press Save.</p></div><div class="pname"><label for="pname">Name tag</label><input id="pname" type="text" maxlength="12" placeholder="Boi" autocomplete="off" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
+      <div class="pstyle" id="pStyle" role="group" aria-label="Choose your Chibi"><p class="pstl">Choose your Chibi</p><div class="pstg" id="pStyleGrid"></div><p class="pstm" id="pStyleMsg" role="status" aria-live="polite"></p></div><div class="pname"><label for="pname">Name tag</label><input id="pname" type="text" maxlength="12" placeholder="Boi" autocomplete="off" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
       <div class="ppick" id="ppick" role="group" aria-label="Choose a pet"></div><div class="ppick"><button type="button" id="pallbtn" aria-pressed="false" aria-controls="pall">👀 All pets</button></div><div class="pall" id="pall" hidden></div><div class="ppick" id="pgender" role="group" aria-label="Boy or girl"><button type="button" data-g="chibi" aria-pressed="true">👦 Boy</button><button type="button" data-g="girl" aria-pressed="false">👧 Girl</button></div>
       <div class="pctl"><button type="button" data-a="fit">👕 Outfit</button><button type="button" data-a="acc">🎩 Accessory</button><button type="button" data-k="1" aria-pressed="false" hidden>💄 Makeup</button><button type="button" data-w="1" aria-pressed="false" hidden>💇 Wig</button><button type="button" id="psave" class="go">💾 Save</button></div>
       <div class="ppicker" id="ppicker" hidden></div><div class="ppicker" id="pmakeup" hidden></div><div class="ppicker" id="pwig" hidden></div><div class="ppicker" id="pwigArt" hidden></div>
@@ -4417,8 +4421,8 @@ function paint(){
 }
 var cls=document.createElement("button");cls.type="button";cls.className="cls";cls.setAttribute("aria-label","Boi, with outfits");cls.innerHTML="<b>\ud83e\uddd1</b>Boi";grid.appendChild(cls);
 [].forEach.call(grid.children,function(b,i){b.onclick=function(){cur=i;try{if(i)localStorage.setItem(KEY,String(i));else localStorage.removeItem(KEY)}catch(e){}
- paint();msg.textContent=i?names[i]+" picked. Press Save to keep it on your account.":"Boi is back (with outfits). Press Save to keep it."}});
-window.BOIPOSE={list:function(){var g=document.querySelector('#pgender [data-g="girl"]'),gl=g&&g.getAttribute("aria-pressed")==="true",r=[],i;for(i=1;i<=srcs.length;i++){var isG=i>=6;if(isG===gl)r.push({i:i,src:srcs[i-1],name:names[i]})}return r},get:function(){return cur},set:function(i){cur=i;try{if(i)localStorage.setItem(KEY,String(i));else localStorage.removeItem(KEY)}catch(e){}paint();msg.textContent=i?names[i]+" picked. Press Save to keep it on your account.":"Boi is back (with outfits). Press Save to keep it."}};
+ paint();msg.textContent=i?names[i]+" picked. Press Save to keep it on your account.":""}});
+window.BOIPOSE={list:function(){var g=document.querySelector('#pgender [data-g="girl"]'),gl=g&&g.getAttribute("aria-pressed")==="true",r=[],i;for(i=1;i<=srcs.length;i++){var isG=i>=6;if(isG===gl)r.push({i:i,src:srcs[i-1],name:names[i]})}return r},get:function(){return cur},set:function(i){cur=i;try{if(i)localStorage.setItem(KEY,String(i));else localStorage.removeItem(KEY)}catch(e){}paint();msg.textContent=i?names[i]+" picked. Press Save to keep it on your account.":""}};
 new MutationObserver(function(){if(cur>0){var f=big.firstElementChild;if(!(f&&f.className==="pstimg"&&big.childNodes.length===1))paint()}}).observe(big,{childList:true});
 paint();
 })();
