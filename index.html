@@ -826,7 +826,7 @@ const LK="engage-local-v2";
 try{const l=JSON.parse(localStorage.getItem(LK)||"{}");S.items=l.items||{};S.done.local=new Set(l.done||[])}catch(e){S.done.local=new Set}
 if(!S.done.local)S.done.local=new Set;
 const saveLocal=()=>{try{localStorage.setItem(LK,JSON.stringify({items:S.items,done:[...S.done.local]}))}catch(e){}};
-let q=Promise.resolve();const queue=f=>{q=q.then(f).catch(e=>{console.error(e);alert("Could not save. Check your connection and Firebase rules.")})};
+let q=Promise.resolve();const queue=f=>{q=q.then(f).catch(e=>{console.error(e);alert("Could not save. Check your connection and Firebase rules.\n\nERROR: "+((e&&(e.code||e.message))||e))})};
 const SHOW_SUGGESTED=false; /* set to true to bring back the built-in sample items */
 function auto(d){if(!SHOW_SUGGESTED)return [];const n=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5),o=[];for(let i=0;i<4;i++){o.push({t:ART[(n+i*3)%ART.length],ty:"a",tm:pad(7+i*3)+":00",auto:1});o.push({t:VID[(n*5+3+i*3)%VID.length],ty:"v",tm:pad(8+i*3)+":30",auto:1})}return o}
 const mineOnly=(x,u)=>!x.to||!x.to.length||x.to.indexOf(u)>-1;
