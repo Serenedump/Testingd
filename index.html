@@ -1998,8 +1998,8 @@ function chGifReady(ci,hc){return new Promise(function(res){var done=false;funct
 function gifPlan(){
  var oo=OUT.filter(function(o){return o.u<=S.stars}),aa=ACC.filter(function(a){return a.u<=S.stars&&a.id!=="none"});
  if(!oo.length)oo=[OUT[0]];if(!aa.length)aa=[ACC[0]];
- var n=Math.min(5,Math.max(oo.length,aa.length)),looks=[],i,cur={o:OUT[S.oi],a:ACC[S.ai]},chb=GN==="chibi"?chGifLooks():null;
- if(chb){looks=chb.looks;cur=chb.cur}else for(i=0;i<n;i++)looks.push({o:oo[i%oo.length],a:aa[i%aa.length]});
+ var n=Math.min(5,Math.max(oo.length,aa.length)),looks=[],i,cur={o:OUT[S.oi],a:ACC[S.ai]},chb=GN==="chibi"?chGifLooks():null,ydl=GN==="girl"&&window.BOIPOSE&&window.BOIPOSE.src("Yellow delivery");
+ if(ydl){cur={o:{id:"yd",yd:1,n:"Yellow delivery rider"},a:{id:"none",n:"No accessory"}};looks=[cur]}else if(chb){looks=chb.looks;cur=chb.cur}else for(i=0;i<n;i++)looks.push({o:oo[i%oo.length],a:aa[i%aa.length]});
  var ci=-1;looks.forEach(function(l,j){if(l.o===cur.o&&l.a===cur.a)ci=j});
  if(ci>=0)looks=looks.slice(ci+1).concat(looks.slice(0,ci+1));else if(!chb)looks.push(cur);
  if(!chb&&looks.length<2&&cur.a.id!=="none"){var nn=ACC.filter(function(a){return a.id==="none"})[0];if(nn)looks.unshift({o:cur.o,a:nn})}
@@ -2010,7 +2010,7 @@ function gifPlan(){
    add({o:pl.o,a:pl.a,sx:.9,sy:.9,fx:"poof",t:.4,cap:pn,lab:"Changing\u2026",dl:7});
    add({o:l.o,a:l.a,sx:.8,sy:.8,fx:"poof",t:.7,cap:nm,lab:"Changing\u2026",dl:7});
    add({o:l.o,a:l.a,sx:1.1,sy:1.1,fx:"burst",t:.9,cap:nm,lab:"New look!",dl:7})}
-  for(var j=0;j<4;j++)add({o:l.o,a:l.a,sx:1,sy:1,cap:nm,lab:li?"New look!":"Dress-up time!",dl:j===3?30:12})});
+  for(var j=0;j<4;j++)add({o:l.o,a:l.a,sx:1,sy:1,cap:nm,lab:li?"New look!":(ydl?"Ready to deliver!":"Dress-up time!"),dl:j===3?30:12})});
  var last=looks[looks.length-1],earned=BADGES.filter(function(b){return S.bd[b.id]}),shown=[];
  earned.forEach(function(b){shown=shown.concat([b.id]);
   [.45,1.25,.92,1].forEach(function(s,q){add({o:last.o,a:last.a,sx:1,sy:1,badge:shown.slice(),pop:b,ps:s,fx:(q===1||q===2)?"burst":"",t:q===1?.5:.8,dl:q===3?40:6})})});
@@ -2047,7 +2047,7 @@ function drawBanner(c,d){var t="Badge unlocked: "+d.pop.n+"!",s=Math.min(1,.6+d.
  c.fillStyle="#2d1f15";c.textBaseline="middle";c.fillText(t,0,4);c.restore();c.textBaseline="alphabetic"}
 function drawStats(c,k){var bx=[30,382,734],st=[["\ud83d\udd25 "+k.streak,"Delivery streak"],[k.love+" \u2b50","Love delivered"],[Object.keys(S.bd).length+"/"+BADGES.length+" \ud83c\udfc5","Badges"]];
  st.forEach(function(v,i){rrect(c,bx[i],748,316,140,28);c.fillStyle="#fff6ea";c.fill();c.fillStyle="#2d1f15";c.font="800 58px "+CF;c.fillText(v[0],bx[i]+158,818);c.fillStyle="#9a6f4d";c.font="700 28px "+CF;c.fillText(v[1],bx[i]+158,862)})}
-function paintFrame(c,im,d,k){c.save();c.translate(540,670);c.scale(d.sx,d.sy);c.drawImage(im,-270,-540,540,540);c.restore();
+function paintFrame(c,im,d,k){c.save();c.translate(540,670+(d.o&&d.o.yd?-14*(1-Math.cos(Math.PI*2*(d.g%16)/16)):0));c.scale(d.sx,d.sy);c.drawImage(im,-270,-540,540,540);c.restore();
  if(d.fx)fxDraw(c,d.fx,d.t);c.textAlign="center";
  if(d.stats)drawStats(c,k);else if(d.badge)drawBadges(c,d);else drawCap(c,d);
  if(d.pop)drawBanner(c,d)}
@@ -2092,8 +2092,9 @@ function diffFrame(cur,prev,W,dl){
  return{px:out,x:x0,y:y0,w:w,h:h,dl:dl}}
 function shgProg(t){var e=$("shg-prog");if(e)e.textContent=t}
 function tick(){return new Promise(function(r){setTimeout(r,0)})}
-var boiC={};
-function boiImg(d){var key=d.o.id+"|"+d.a.id+"|"+(d.g%16)+"|"+d.mood+"|"+(d.blink?1:0);
+var boiC={},YDP=null;
+function ydImg(){if(YDP)return YDP;YDP=new Promise(function(res){var im=new Image();im.onload=function(){var c=document.createElement("canvas");c.width=c.height=600;var x=c.getContext("2d"),r=Math.min(600/im.naturalWidth,600/im.naturalHeight),w=im.naturalWidth*r,h=im.naturalHeight*r;x.drawImage(im,(600-w)/2,600-h,w,h);res(c)};im.onerror=function(){res(document.createElement("canvas"))};im.src=window.BOIPOSE.src("Yellow delivery")});return YDP}
+function boiImg(d){if(d.o&&d.o.yd)return ydImg();var key=d.o.id+"|"+d.a.id+"|"+(d.g%16)+"|"+d.mood+"|"+(d.blink?1:0);
  if(boiC[key])return boiC[key];
  if(d.o&&d.o.ci!=null)return boiC[key]=chGifReady(d.o.ci,d.o.hc).then(function(){var po=CHPV.o,pa=CHPV.a,pc=CHS.c,sv;CHPV.o=d.o.ci;CHPV.a=d.a.ca!=null?d.a.ca:CHS.a;CHS.c=d.o.hc;try{sv=boiFrame(d.g,d.o,d.a.id,d.mood,d.blink)}finally{CHPV.o=po;CHPV.a=pa;CHS.c=pc}return svgImg(sv,300,300)});
  return boiC[key]=svgImg(boiFrame(d.g,d.o,d.a.id,d.mood,d.blink),300,300)}
@@ -3046,7 +3047,7 @@ scarf:function(){return '<g>'
 
 /* ===== Chibi Boi: the new default look (outfit tint, hairstyles, accessories) ===== */
 var CHNAMES=["Original Messy","Messy Spikes","Soft Side Part","Short Crop","Curtain Bangs","Wavy Swoop","Fluffy Mess","Slick Side","Spiky Fade","Long Part","Textured Crop","Man Bun","Tousled"];
-var CHA=[{id:"none",n:"No accessory",u:0},{id:"helmet",n:"Rider Helmet",u:0,hid:1},{id:"cap",n:"Blue Cap",u:2,hid:1},{id:"sunshades",n:"Sunshades",u:4},{id:"specs",n:"Round Glasses",u:5},{id:"star",n:"Star Clip",u:7},{id:"phones",n:"Headphones",u:8},{id:"beanie",n:"Red Beanie",u:10,hid:1},{id:"scarf",n:"Red Scarf",u:12},{id:"clipheart",n:"Heart Clip",u:0,g:1},{id:"clipflower",n:"Flower Clip",u:0,g:1},{id:"clipbow",n:"Bow Clip",u:0,g:1},{id:"clipbutter",n:"Butterfly Clip",u:0,g:1}];
+var CHA=[{id:"none",n:"No accessory",u:0},{id:"helmet",n:"Rider Helmet",u:0,hid:1},{id:"cap",n:"Blue Cap",u:2,hid:1},{id:"sunshades",n:"Sunshades",u:4},{id:"specs",n:"Round Glasses",u:5},{id:"star",n:"Star Clip",u:7},{id:"phones",n:"Headphones",u:8,hid:1},{id:"beanie",n:"Red Beanie",u:10,hid:1},{id:"scarf",n:"Red Scarf",u:12},{id:"clipheart",n:"Heart Clip",u:0,g:1},{id:"clipflower",n:"Flower Clip",u:0,g:1},{id:"clipbow",n:"Bow Clip",u:0,g:1},{id:"clipbutter",n:"Butterfly Clip",u:0,g:1}];
 var CHHC=[{n:"Original",c:"#2b1b12"},{n:"Chestnut",c:"#8a5a34",h:25,s:.55,m:1,a:.2},{n:"Blonde",c:"#e6c15a",h:44,s:.8,m:1,a:.4},{n:"Ginger",c:"#d9622b",h:19,s:.85,m:1,a:.22},{n:"Pink",c:"#ff8fb8",h:338,s:.85,m:1,a:.4},{n:"Blue",c:"#4a78e0",h:221,s:.75,m:1,a:.24},{n:"Purple",c:"#8a5ee0",h:268,s:.65,m:1,a:.24},{n:"Green",c:"#3fae6a",h:145,s:.6,m:1,a:.22},{n:"Silver",c:"#c9ccd6",h:228,s:.1,m:1,a:.52}];
 var CHKEY="boi-chibi-v1",CHS={h:0,o:0,a:0,c:0},CHPV={o:null,a:null},CHCV={},CHPEND={},CHT=0;
 function chW(){return window.CHBW||[]}
@@ -4420,7 +4421,7 @@ function paint(){
 var cls=document.createElement("button");cls.type="button";cls.className="cls";cls.setAttribute("aria-label","Boi, with outfits");cls.innerHTML="<b>\ud83e\uddd1</b>Boi";grid.appendChild(cls);
 [].forEach.call(grid.children,function(b,i){b.onclick=function(){cur=i;try{if(i)localStorage.setItem(KEY,String(i));else localStorage.removeItem(KEY)}catch(e){}
  paint();msg.textContent=i?names[i]+" picked. Press Save to keep it on your account.":"Boi is back (with outfits). Press Save to keep it."}});
-window.BOIPOSE={list:function(){var g=document.querySelector('#pgender [data-g="girl"]'),gl=g&&g.getAttribute("aria-pressed")==="true",r=[],i;for(i=1;i<=srcs.length;i++){var isG=i>=6;if(isG===gl)r.push({i:i,src:srcs[i-1],name:names[i]})}return r},get:function(){return cur},set:function(i){cur=i;try{if(i)localStorage.setItem(KEY,String(i));else localStorage.removeItem(KEY)}catch(e){}paint();msg.textContent=i?names[i]+" picked. Press Save to keep it on your account.":"Boi is back (with outfits). Press Save to keep it."}};
+window.BOIPOSE={src:function(n){var j=names.indexOf(n);return j>0?srcs[j-1]:null},list:function(){var g=document.querySelector('#pgender [data-g="girl"]'),gl=g&&g.getAttribute("aria-pressed")==="true",r=[],i;for(i=1;i<=srcs.length;i++){var isG=i>=6;if(isG===gl)r.push({i:i,src:srcs[i-1],name:names[i]})}return r},get:function(){return cur},set:function(i){cur=i;try{if(i)localStorage.setItem(KEY,String(i));else localStorage.removeItem(KEY)}catch(e){}paint();msg.textContent=i?names[i]+" picked. Press Save to keep it on your account.":"Boi is back (with outfits). Press Save to keep it."}};
 new MutationObserver(function(){if(cur>0){var f=big.firstElementChild;if(!(f&&f.className==="pstimg"&&big.childNodes.length===1))paint()}}).observe(big,{childList:true});
 paint();
 })();
