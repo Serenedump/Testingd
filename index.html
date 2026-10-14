@@ -3660,6 +3660,65 @@ function panelVisit(p){var u=visitUid,S=getStores()[u];if(!S){closePanel();retur
  if(mine&&!S.menu.length)g.appendChild(h("p",{class:"cmsub",text:"Nothing on the menu yet."}));p.appendChild(g);
  if(mine){p.appendChild(cashier(S,K));p.appendChild(h("p",{class:"cmsub",text:"👀 "+S.visits+" visits · 🧾 "+S.orders+" orders"}));p.appendChild(h("div",{class:"cmrow"},[h("button",{type:"button",text:"✏️ Edit store",onclick:function(){openBuild()}})]))}}
 
+/* ---------- rooftop deck, top view (neon sign = store name) ---------- */
+function rfTop(nm){var n=String(nm||"").slice(0,16),t=esc(n),fs=22,tl=Math.round(Math.min(250,Math.max(46,n.length*fs*.56))),i,k,x,y,s,G="";
+ s='<svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+t+' rooftop deck, top view"><defs>'
+ +'<linearGradient id="rfSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e2c"/><stop offset="1" stop-color="#3c3a78"/></linearGradient>'
+ +'<linearGradient id="rfWtr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9af0ff"/><stop offset="1" stop-color="#2f86ff"/></linearGradient>'
+ +'<radialGradient id="rfFire" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#ff5a1f"/></radialGradient>'
+ +'<radialGradient id="rfLamp" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd58c" stop-opacity=".5"/><stop offset="1" stop-color="#ffd58c" stop-opacity="0"/></radialGradient>'
+ +'<radialGradient id="rfBlue" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#6fe3ff" stop-opacity=".55"/><stop offset="1" stop-color="#6fe3ff" stop-opacity="0"/></radialGradient>'
+ +'<radialGradient id="rfNeon" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#35ff9a" stop-opacity=".42"/><stop offset="1" stop-color="#35ff9a" stop-opacity="0"/></radialGradient>'
+ +'<filter id="rfGl" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="1.3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
+ +'<filter id="rfGl2" x="-20%" y="-80%" width="140%" height="260%"><feGaussianBlur stdDeviation="3"/></filter></defs>';
+ /* night sky + skyline */
+ s+='<rect width="300" height="34" fill="url(#rfSky)"/><g fill="#141a45">';
+ var B=[[0,16,18],[16,8,14],[30,20,20],[50,12,16],[66,24,22],[88,10,12],[100,18,18],[118,6,14],[132,22,20],[152,14,16],[168,26,24],[192,12,14],[206,20,20],[226,8,16],[242,22,18],[260,12,20],[280,18,20]];
+ B.forEach(function(b){s+='<rect x="'+b[0]+'" y="'+(34-b[1]-6)+'" width="'+b[2]+'" height="'+(b[1]+6)+'"/>'});
+ s+='</g><path d="M212 6l5 18h-10z" fill="#1c2460"/><circle cx="212" cy="5" r="1.6" fill="#ff5a6a"/>';
+ for(i=0;i<46;i++){x=(i*37)%296+2;y=10+(i*13)%20;s+='<rect x="'+x+'" y="'+y+'" width="1.6" height="1.6" fill="'+(i%5?'#ffd98a':'#8fdcff')+'" opacity="'+(i%3?.9:.55)+'"/>'}
+ /* hedge wall */
+ s+='<rect y="30" width="300" height="36" fill="#1f6b3a"/>';
+ for(i=0;i<52;i++)s+='<circle cx="'+(i*5.9+2)+'" cy="'+(36+(i%4)*6)+'" r="'+(4.6+(i%3)*.5)+'" fill="'+(i%2?'#2f9b52':'#277f45')+'"/>';
+ s+='<rect y="62" width="300" height="4" fill="#173f26"/>';
+ /* deck planks (teal stain, like the photo) */
+ s+='<rect y="66" width="300" height="144" fill="#2c7d75"/>';
+ for(k=0;k<10;k++){y=66+k*14.4;s+='<path d="M0 '+y.toFixed(1)+'H300" stroke="#1f625c" stroke-width=".9"/>';for(x=((k*53)%71)+6;x<300;x+=71)s+='<path d="M'+x+' '+y.toFixed(1)+'v14.4" stroke="#1f625c" stroke-width=".7"/>'}
+ /* light pools */
+ s+='<ellipse cx="62" cy="100" rx="60" ry="34" fill="url(#rfBlue)"/><ellipse cx="190" cy="178" rx="84" ry="32" fill="url(#rfLamp)"/><ellipse cx="262" cy="104" rx="44" ry="28" fill="url(#rfLamp)"/><ellipse cx="150" cy="70" rx="104" ry="12" fill="url(#rfNeon)"/>';
+ /* neon sign = store name */
+ s+='<g transform="rotate(-2 150 52)"><text x="150" y="57" text-anchor="middle" font-size="'+fs+'" font-style="italic" font-weight="700" font-family="\'Snell Roundhand\',\'Brush Script MT\',\'Segoe Script\',cursive" textLength="'+tl+'" lengthAdjust="spacingAndGlyphs" fill="none" stroke="#19e07a" stroke-width="3.2" opacity=".85" filter="url(#rfGl2)">'+t+'</text>'
+ +'<text x="150" y="57" text-anchor="middle" font-size="'+fs+'" font-style="italic" font-weight="700" font-family="\'Snell Roundhand\',\'Brush Script MT\',\'Segoe Script\',cursive" textLength="'+tl+'" lengthAdjust="spacingAndGlyphs" fill="#e4fff0" stroke="#3dff9a" stroke-width=".8" paint-order="stroke" filter="url(#rfGl)">'+t+'</text></g>';
+ /* string lights along the hedge base and the bottom edge */
+ for(i=0;i<24;i++){x=6+i*12.4;s+='<circle cx="'+x.toFixed(1)+'" cy="'+(66+(i%2)*2)+'" r="3.4" fill="#ffd98a" opacity=".22"/><circle cx="'+x.toFixed(1)+'" cy="'+(66+(i%2)*2)+'" r="1.3" fill="#fff0c4"/>'}
+ for(i=0;i<24;i++){x=6+i*12.4;s+='<circle cx="'+x.toFixed(1)+'" cy="'+(207-(i%2)*2)+'" r="3" fill="#ffd98a" opacity=".2"/><circle cx="'+x.toFixed(1)+'" cy="'+(207-(i%2)*2)+'" r="1.2" fill="#fff0c4"/>'}
+ /* outdoor kitchen counter (left edge) */
+ s+='<rect x="2" y="70" width="17" height="134" rx="3" fill="#eef0f4" stroke="#b9c1cd"/><rect x="5" y="104" width="11" height="16" rx="2" fill="#44566a"/><rect x="5" y="132" width="11" height="16" rx="2" fill="#44566a"/><path d="M10.5 104v-5m0 33v-5" stroke="#9aa6b6" stroke-width="1.6"/><rect x="5" y="76" width="11" height="22" rx="2" fill="#d5dae2"/><circle cx="8" cy="82" r="2" fill="#3b5b8a"/><circle cx="13" cy="88" r="2" fill="#a14b2f"/><circle cx="8" cy="93" r="2" fill="#3b8a5b"/><rect x="5" y="158" width="11" height="40" rx="2" fill="#d5dae2"/>';
+ /* hot tub */
+ s+='<ellipse cx="62" cy="100" rx="52" ry="26" fill="url(#rfBlue)" opacity=".8"/><rect x="24" y="80" width="76" height="38" rx="8" fill="#1d5c57" stroke="#bff3ea" stroke-width="2"/><rect x="29" y="85" width="66" height="28" rx="5" fill="url(#rfWtr)"/><path d="M36 93q8-4 16 0t16 0t16 0M36 103q8-4 16 0t16 0t16 0" fill="none" stroke="#fff" stroke-width="1" opacity=".55"/>';
+ for(i=0;i<7;i++)s+='<circle cx="'+(38+i*8.6)+'" cy="'+(97+(i%3)*5)+'" r="1.3" fill="#fff" opacity=".7"/>';
+ s+='<rect x="52" y="119" width="22" height="7" rx="2" fill="#256b65" stroke="#8fd9cf"/>';
+ /* small white chairs by the hedge */
+ [112,128,144].forEach(function(cx){s+='<rect x="'+cx+'" y="69" width="11" height="12" rx="3" fill="#fff" stroke="#cfd3da"/><rect x="'+(cx+1.5)+'" y="72" width="8" height="7" rx="2" fill="#9cc0cf"/>'});
+ /* patterned rug under the fire table */
+ s+='<ellipse cx="190" cy="182" rx="90" ry="25" fill="#e2cfa8"/><ellipse cx="190" cy="182" rx="84" ry="21" fill="none" stroke="#a98a5c" stroke-width="1" stroke-dasharray="4 3"/>';
+ for(i=0;i<9;i++){x=116+i*18;s+='<path d="M'+x+' 186q4-12 9-2q-4 6-9 2z" fill="#6f5a35" opacity=".5"/>'}
+ /* L-shaped sofa (white frame, orange cushions) */
+ s+='<path d="M122 132H292V208H262V154H122Z" fill="#f4f5f7" stroke="#c4c9d2" stroke-width="1.2"/><path d="M124 134H290V140H124Z" fill="#c9402e"/><path d="M284 134H290V206H284Z" fill="#c9402e"/>';
+ for(i=0;i<4;i++)s+='<rect x="'+(124+i*34)+'" y="141" width="32" height="11" rx="3" fill="'+(i%2?'#f08a3c':'#e8553a')+'"/>';
+ for(i=0;i<2;i++)s+='<rect x="264" y="'+(155+i*26)+'" width="19" height="24" rx="3" fill="'+(i%2?'#f08a3c':'#e8553a')+'"/>';
+ /* armchair */
+ s+='<rect x="44" y="130" width="36" height="28" rx="5" fill="#f4f5f7" stroke="#c4c9d2" stroke-width="1.2"/><rect x="46" y="132" width="6" height="24" rx="2" fill="#c9402e"/><rect x="53" y="135" width="25" height="19" rx="3" fill="#f08a3c"/>';
+ /* fire-pit table */
+ s+='<ellipse cx="181" cy="182" rx="46" ry="16" fill="url(#rfLamp)"/><rect x="150" y="170" width="62" height="24" rx="4" fill="#f6f7f9" stroke="#cfd3da"/><rect x="155" y="175" width="52" height="14" rx="3" fill="url(#rfFire)"/>';
+ for(i=0;i<6;i++)s+='<ellipse cx="'+(162+i*7.4)+'" cy="182" rx="2.2" ry="4" fill="#fff3b0"><animate attributeName="opacity" values=".95;.5;1;.6;.95" dur="'+(1.1+i*.17).toFixed(2)+'s" repeatCount="indefinite"/></ellipse>';
+ /* front chairs */
+ [[96,190],[216,192]].forEach(function(c){s+='<rect x="'+c[0]+'" y="'+c[1]+'" width="34" height="16" rx="5" fill="#fff" stroke="#cfd3da"/><rect x="'+(c[0]+3)+'" y="'+(c[1]+3)+'" width="28" height="10" rx="3" fill="#9cc0cf"/>'});
+ /* potted agave + string-light palms */
+ function agave(cx,cy,r){var g='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r+3)+'" fill="#20262e" stroke="#4a525e"/>',a;for(a=0;a<9;a++){var ang=a/9*Math.PI*2;g+='<path d="M'+cx+' '+cy+'L'+(cx+Math.cos(ang-.2)*r).toFixed(1)+' '+(cy+Math.sin(ang-.2)*r).toFixed(1)+'L'+(cx+Math.cos(ang)*(r+3)).toFixed(1)+' '+(cy+Math.sin(ang)*(r+3)).toFixed(1)+'L'+(cx+Math.cos(ang+.2)*r).toFixed(1)+' '+(cy+Math.sin(ang+.2)*r).toFixed(1)+'Z" fill="'+(a%2?'#3fb095':'#2f9a82')+'"/>'}return g+'<circle cx="'+cx+'" cy="'+cy+'" r="2" fill="#bff5e6"/>'}
+ function palm(cx,cy){var g='<circle cx="'+cx+'" cy="'+cy+'" r="11" fill="#20262e" stroke="#4a525e"/>',a;for(a=0;a<7;a++){var ang=a/7*Math.PI*2+.3,ex=cx+Math.cos(ang)*19,ey=cy+Math.sin(ang)*14;g+='<path d="M'+cx+' '+cy+'Q'+((cx+ex)/2+3)+' '+((cy+ey)/2-4)+' '+ex.toFixed(1)+' '+ey.toFixed(1)+'" fill="none" stroke="#2fa05a" stroke-width="5" stroke-linecap="round"/><circle cx="'+ex.toFixed(1)+'" cy="'+ey.toFixed(1)+'" r="1.8" fill="#ff4f9a"/><circle cx="'+((cx+ex)/2).toFixed(1)+'" cy="'+((cy+ey)/2).toFixed(1)+'" r="1.4" fill="#ffd0e6"/>'}return g+'<circle cx="'+cx+'" cy="'+cy+'" r="3" fill="#8a5a35"/>'}
+ s+=agave(176,92,8)+agave(34,196,8)+palm(268,96);
+ return s+'</svg>'}
 var tray={u:null,items:[],ask:false,seat:-1},lastSeat="";
 function freeSeat(u){var used={};Object.keys(pres).forEach(function(k){var q=pres[k];if(k!==uid&&fresh(q)&&q.dn===u)used[q.ds]=1});for(var i=0;i<8;i++)if(!used[i])return i;return 0}
 var RJ=["\uD83E\uDE91","\uD83D\uDECB\uFE0F","\u26F1\uFE0F","\uD83C\uDF74","\uD83C\uDF34","\uD83C\uDF33","\uD83E\uDEB4","\uD83C\uDF35","\uD83C\uDF3B","\uD83C\uDF37","\uD83C\uDF39","\uD83C\uDF3A","\uD83C\uDF40","\uD83C\uDFEE","\uD83D\uDCA1","\uD83D\uDD6F\uFE0F","\uD83C\uDF88","\uD83C\uDF89","\uD83E\uDEA9","\uD83D\uDD0A","\uD83C\uDFB8","\uD83E\uDD41","\uD83C\uDFB9","\uD83D\uDD25","\u26F2","\uD83E\uDE9E","\uD83D\uDDBC\uFE0F","\uD83C\uDFD3","\uD83C\uDFAF","\uD83E\uDDF8","\uD83D\uDC36","\uD83D\uDC31","\uD83E\uDD9C","\uD83C\uDF49","\uD83C\uDF55","\uD83E\uDDC1","\uD83C\uDF79","\u2615","\uD83E\uDD42","\uD83C\uDF7E","\uD83C\uDF70","\uD83C\uDF66","\uD83E\uDE81","\uD83D\uDEB2","\uD83D\uDEF5","\uD83E\uDE9C","\uD83E\uDDFA","\uD83D\uDCFB","\uD83C\uDFAA","\u2B50","\uD83C\uDF08","\uD83E\uDEB5","\uD83E\uDEA8","\uD83D\uDECE\uFE0F","\uD83D\uDCDA","\uD83C\uDFA8","\uD83D\uDCF7","\uD83C\uDFC6","\uD83D\uDC90"],RD={u:null,on:false,items:[],sel:-1};
@@ -3726,13 +3785,8 @@ function visitorFlow(p,u,S,K){var T=trayFor(u),tot=0,card=h("div",{class:"cmflow
   h("button",{type:"button",text:"\uD83E\uDD61 Take out",onclick:function(){if(placeTray(u,"out")){T.items=[];T.ask=false;renderPanel();toast("Order placed \uD83E\uDD61 Thanks for visiting!")}}}),
   h("button",{type:"button",text:"Cancel",onclick:function(){T.ask=false;renderPanel()}})]));
  if(u!==myId())p.appendChild(card);
- var SE=[[50,128],[125,128],[200,128],[262,128],[50,188],[125,188],[200,188],[262,188]],dn=h("div",{class:"cmdn"}),i,sv='<svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rooftop dining"><defs><linearGradient id="rfSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff"/><stop offset="1" stop-color="#fff0d2"/></linearGradient></defs><rect width="300" height="104" fill="url(#rfSky)"/><ellipse cx="60" cy="40" rx="26" ry="8" fill="#fff" opacity=".85"/><ellipse cx="230" cy="30" rx="30" ry="9" fill="#fff" opacity=".85"/><g fill="#9db4c9"><rect x="10" y="66" width="26" height="36"/><rect x="40" y="52" width="20" height="50"/><rect x="66" y="72" width="30" height="30"/><rect x="150" y="58" width="24" height="44"/><rect x="180" y="70" width="34" height="32"/><rect x="224" y="48" width="22" height="54"/><rect x="250" y="64" width="34" height="38"/></g><rect y="100" width="300" height="110" fill="#d8c3a0"/><g stroke="#c4ab82" stroke-width="1.5"><path d="M0 140H300M0 172H300M0 204H300"/></g><path d="M0 100H300" stroke="#8a5a35" stroke-width="4"/><g stroke="#8a5a35" stroke-width="3">',dn_;
- for(i=0;i<=15;i++)sv+='<path d="M'+(i*20)+' 100v-14"/>';
- sv+='</g><path d="M0 86H300" stroke="#8a5a35" stroke-width="3"/><path d="M0 12Q75 34 150 12T300 12" fill="none" stroke="#6f4524" stroke-width="1.5"/>';
- for(i=0;i<12;i++)sv+='<circle cx="'+(i*25+8)+'" cy="'+(i%2?24:18)+'" r="2.6" fill="#ffd24d"/>';
- sv+='<text x="8" y="50" font-size="9" font-weight="800" fill="#4a5f7a" font-family="system-ui,sans-serif">Rooftop Dining</text><path d="M4 208h14v-8h14v-8h14v-8h14v-8" fill="none" stroke="#8a5a35" stroke-width="4"/><g><rect x="272" y="150" width="14" height="12" fill="#a2672f"/><circle cx="279" cy="144" r="10" fill="#4caf50"/></g>';
- SE.forEach(function(s,k){sv+='<path d="M'+(s[0]-26)+' '+(s[1]-34)+'H'+(s[0]+26)+'L'+s[0]+' '+(s[1]-54)+'Z" fill="'+(k%2?"#ff6f9f":"#ffd24d")+'" opacity=".9"/><rect x="'+(s[0]-1.5)+'" y="'+(s[1]-34)+'" width="3" height="34" fill="#6f4524"/><ellipse cx="'+s[0]+'" cy="'+s[1]+'" rx="21" ry="6" fill="#8a5a35"/>'});
- dn.innerHTML=sv+'</svg>';
+ var SE=[[146,150],[187,150],[229,150],[277,198],[62,156],[112,206],[232,206],[62,114]],dn=h("div",{class:"cmdn"}),i,sv=rfTop(S.name);
+ dn.innerHTML=sv;
  if(RD.u!==u){RD.u=u;RD.on=false;RD.sel=-1}var own=u===myId();rdDraw(dn,own&&RD.on?RD.items:rdParse(S.rdeco),own&&RD.on);
  var putC=function(node,k){var w=h("div",{class:"cmsit"});w.style.left=(SE[k][0]/3)+"%";w.style.top=((SE[k][1]-42)/2.1)+"%";w.appendChild(node);dn.appendChild(w)};
  Object.keys(pres).forEach(function(k){var q=pres[k];if(k===uid||!fresh(q)||q.dn!==u||q.ds<0||q.ds>7)return;var o=clean(q.foot||q.ride)||(window.defChibiNode?window.defChibiNode():null);if(o)putC(o,q.ds)});
@@ -3752,7 +3806,7 @@ function panelBuild(p){var d=draft,K=kind(d.kind);
  p.appendChild(h("label",{class:"cml",for:"cmName",text:"Store name"}));
  p.appendChild(h("input",{id:"cmName",type:"text",maxlength:"16",placeholder:"Boi's Bakery",autocomplete:"off",value:d.name,oninput:function(){d.name=cl(this.value,16);schedScene()}}));
  p.appendChild(h("label",{class:"cml",text:"What do you sell?"}));
- var kg=h("div",{class:"cmgrid"});KINDS.forEach(function(k){kg.appendChild(h("button",{type:"button","aria-pressed":String(k.id===d.kind),text:k.e+" "+k.n,onclick:function(){if(d.kind!==k.id){d.kind=k.id;d.menu=[0,1,2];d.mn=Array(NI).fill("")}renderPanel();renderScene()}}))});p.appendChild(kg);
+ var FOODK=["bakery","burger","cafe","icecream"];if(FOODK.indexOf(d.kind)<0){d.kind="bakery";d.menu=[0,1,2];d.mn=Array(NI).fill("")}var kg=h("div",{class:"cmgrid"});KINDS.forEach(function(k){if(FOODK.indexOf(k.id)<0)return;kg.appendChild(h("button",{type:"button","aria-pressed":String(k.id===d.kind),text:k.e+" "+k.n,onclick:function(){if(d.kind!==k.id){d.kind=k.id;d.menu=[0,1,2];d.mn=Array(NI).fill("")}renderPanel();renderScene()}}))});p.appendChild(kg);
  p.appendChild(h("label",{class:"cml",text:"Awning color"}));
  var cg=h("div",{class:"cmcol"});COLORS.forEach(function(c){var b=h("button",{type:"button","aria-label":"Color "+c,"aria-pressed":String(c===d.color)});b.style.background=c;b.onclick=function(){d.color=c;renderPanel();renderScene()};cg.appendChild(b)});p.appendChild(cg);
  p.appendChild(h("label",{class:"cml",for:"cmTag",text:"Tagline (optional)"}));
