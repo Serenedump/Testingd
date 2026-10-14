@@ -1983,14 +1983,26 @@ function boiFrame(g,o,a,mood,blink){var p=(g%16)/16,T=Math.PI*2,tw=0,svg=pupSVG(
   .replace(/class="pq-eye" style="/g,'style="transform:scaleY('+(blink?.12:1)+');')
   .replace('transform:rotate(0deg)','transform:rotate('+(1.8*Math.sin(T*p)).toFixed(2)+'deg)')}
 function lookName(l){return l.a&&l.a.id!=="none"?l.o.n+" \u00b7 "+l.a.n:l.o.n}
+/* Chibi GIF: every look changes outfit + hair color + room (garage = the drive scene). Ped's uniform and Denim Classic always included */
+function chGifRooms(){var R=[["bed","Bedroom",window.roomSVG],["garage","Garage \ud83d\ude97",window.garageSVG],["music","Music Room",window.musicSVG],["kit","Kitchen",window.kitchenSVG],["sala","Sala",window.salaSVG],["bath","Shower Room",window.bathSVG],["attic","Attic",window.atticSVG]];return R.filter(function(r){return typeof r[2]==="function"})}
+function chGifLooks(){var ac=CHA[CHS.a]||CHA[0],an=(ac.hid||ac.id==="none")?{id:"none",n:"No accessory",ca:CHS.a}:{id:ac.id,n:ac.n,ca:CHS.a},pk=-1,i,L=[],pool=[],rooms=chGifRooms(),hcs=[],oth;
+ for(i=0;i<CHO.length;i++)if(CHO[i].pk)pk=i;
+ CHO.forEach(function(o,ix){if(o.hid||o.u>S.stars||ix===0||ix===pk)return;pool.push(ix)});
+ var seq=[0,pk].concat(pool).filter(function(ix){return ix>=0}).slice(0,7);
+ CHHC.forEach(function(h,ix){hcs.push(ix)});oth=hcs.filter(function(ix){return ix!==CHS.c});
+ seq.forEach(function(ix,k){var hc=k===0?CHS.c:oth[(k*3)%oth.length],r=rooms[k%rooms.length]||["bed","Bedroom"],hn=hc?" \u00b7 "+CHHC[hc].n+" hair":"";
+  L.push({o:{id:"ch"+ix+"c"+hc+r[0],n:CHO[ix].n+hn,ci:ix,hc:hc,rv:r[0],rn:r[1]},a:an})});
+ return{looks:L,cur:{o:{},a:an}}}
+function chGifReady(ci,hc){return new Promise(function(res){var done=false;function fin(){if(!done){done=true;res()}}setTimeout(fin,6000);
+ chEnsure(CHS.h,ci,function(){(function w(n){var hk=CHS.h+"|"+hc;if(!hc||!CHHC[hc]||CHHL[hk]!==undefined||n>80)return fin();if(!CHHP[hk])chHairBuild(CHS.h,hc);setTimeout(function(){w(n+1)},60)})(0)})})}
 function gifPlan(){
  var oo=OUT.filter(function(o){return o.u<=S.stars}),aa=ACC.filter(function(a){return a.u<=S.stars&&a.id!=="none"});
  if(!oo.length)oo=[OUT[0]];if(!aa.length)aa=[ACC[0]];
- var n=Math.min(5,Math.max(oo.length,aa.length)),looks=[],i,cur={o:OUT[S.oi],a:ACC[S.ai]};
- for(i=0;i<n;i++)looks.push({o:oo[i%oo.length],a:aa[i%aa.length]});
+ var n=Math.min(5,Math.max(oo.length,aa.length)),looks=[],i,cur={o:OUT[S.oi],a:ACC[S.ai]},chb=GN==="chibi"?chGifLooks():null;
+ if(chb){looks=chb.looks;cur=chb.cur}else for(i=0;i<n;i++)looks.push({o:oo[i%oo.length],a:aa[i%aa.length]});
  var ci=-1;looks.forEach(function(l,j){if(l.o===cur.o&&l.a===cur.a)ci=j});
- if(ci>=0)looks=looks.slice(ci+1).concat(looks.slice(0,ci+1));else looks.push(cur);
- if(looks.length<2&&cur.a.id!=="none"){var nn=ACC.filter(function(a){return a.id==="none"})[0];if(nn)looks.unshift({o:cur.o,a:nn})}
+ if(ci>=0)looks=looks.slice(ci+1).concat(looks.slice(0,ci+1));else if(!chb)looks.push(cur);
+ if(!chb&&looks.length<2&&cur.a.id!=="none"){var nn=ACC.filter(function(a){return a.id==="none"})[0];if(nn)looks.unshift({o:cur.o,a:nn})}
  var F=[],g=0;function add(d){d.g=g++;d.mood=d.mood||"excited";d.blink=(d.g%16===11);F.push(d);return d}
  looks.forEach(function(l,li){var nm=lookName(l);
   if(li>0){var pl=looks[li-1],pn=lookName(pl);
@@ -2019,7 +2031,7 @@ function paintBG(c,room){var g=c.createLinearGradient(0,0,0,1080);g.addColorStop
  c.fillStyle="rgba(255,255,255,.88)";c.font="600 30px "+CF;c.fillText("serenedump.github.io/EngageDeliveryBoi",540,1020)}
 function fitText(c,txt,w,px,wt,mn){var s=px;c.font=wt+" "+s+"px "+CF;while(c.measureText(txt).width>w&&s>(mn||24)){s-=2;c.font=wt+" "+s+"px "+CF}}
 function drawCap(c,d){rrect(c,70,752,940,128,42);c.fillStyle="#fff6e6";c.fill();
- c.fillStyle="#ee5f10";c.font="800 30px "+CF;c.fillText(d.lab.toUpperCase(),540,798);
+ c.fillStyle="#ee5f10";c.font="800 30px "+CF;c.fillText((d.lab+(d.o&&d.o.rn?" \u00b7 "+d.o.rn:"")).toUpperCase(),540,798);
  c.fillStyle="#2d1f15";fitText(c,d.cap,860,54,800);c.fillText(d.cap,540,858)}
 function drawBadges(c,d){var n=BADGES.length,gap=1020/n;
  BADGES.forEach(function(b,i){var cx=30+gap*(i+.5),on=d.badge.indexOf(b.id)>=0,s=d.pop&&d.pop.id===b.id?d.ps:1,teal=/(^|\s)t(\s|$)/.test(b.c),sq=/sq|sh/.test(b.c);
@@ -2083,6 +2095,7 @@ function tick(){return new Promise(function(r){setTimeout(r,0)})}
 var boiC={};
 function boiImg(d){var key=d.o.id+"|"+d.a.id+"|"+(d.g%16)+"|"+d.mood+"|"+(d.blink?1:0);
  if(boiC[key])return boiC[key];
+ if(d.o&&d.o.ci!=null)return boiC[key]=chGifReady(d.o.ci,d.o.hc).then(function(){var po=CHPV.o,pa=CHPV.a,pc=CHS.c,sv;CHPV.o=d.o.ci;CHPV.a=d.a.ca!=null?d.a.ca:CHS.a;CHS.c=d.o.hc;try{sv=boiFrame(d.g,d.o,d.a.id,d.mood,d.blink)}finally{CHPV.o=po;CHPV.a=pa;CHS.c=pc}return svgImg(sv,300,300)});
  return boiC[key]=svgImg(boiFrame(d.g,d.o,d.a.id,d.mood,d.blink),300,300)}
 function makeGif(){var key=shareKey();
  if(shg&&shg.key===key)return Promise.resolve(shg);
@@ -2090,8 +2103,10 @@ function makeGif(){var key=shareKey();
  var p=(async function(){var W=420,k=stats(),i;boiC={};
   try{await loadFont()}catch(e){}
   var room=await svgImg(roomSVG(),1020,578),base=document.createElement("canvas");base.width=base.height=1080;paintBG(base.getContext("2d"),room);
+  var bases={bed:base};
+  if(GN==="chibi"){var RL=chGifRooms();for(var ri=0;ri<RL.length;ri++){if(RL[ri][0]==="bed")continue;try{var rim=await svgImg(RL[ri][2](),1020,578),rcv=document.createElement("canvas");rcv.width=rcv.height=1080;paintBG(rcv.getContext("2d"),rim);bases[RL[ri][0]]=rcv}catch(e){}shgProg("Setting up rooms... "+(ri+1)+"/"+RL.length);await tick()}}
   var F=gifPlan(),fc=document.createElement("canvas");fc.width=fc.height=W;var c=fc.getContext("2d",{willReadFrequently:true}),sc=W/1080;
-  async function render(d){c.setTransform(1,0,0,1,0,0);c.drawImage(base,0,0,W,W);c.setTransform(sc,0,0,sc,0,0);var im=await boiImg(d);paintFrame(c,im,d,k);c.setTransform(1,0,0,1,0,0);return c.getImageData(0,0,W,W).data}
+  async function render(d){c.setTransform(1,0,0,1,0,0);c.drawImage((d.o&&d.o.rv&&bases[d.o.rv])||base,0,0,W,W);c.setTransform(sc,0,0,sc,0,0);var im=await boiImg(d);paintFrame(c,im,d,k);c.setTransform(1,0,0,1,0,0);return c.getImageData(0,0,W,W).data}
   var smp=[],sl=[];for(i=0;i<F.length;i+=4)sl.push(i);if(sl[sl.length-1]!==F.length-1)sl.push(F.length-1);
   for(var s=0;s<sl.length;s++){var dd=await render(F[sl[s]]);for(var q=0;q<dd.length;q+=40)smp.push((dd[q]<<16)|(dd[q+1]<<8)|dd[q+2]);shgProg("Picking colors... "+(s+1)+"/"+sl.length);await tick()}
   var pal=mkPalette(smp,255),cache=new Int16Array(262144).fill(-1),fr=[],prev=null;
