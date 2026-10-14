@@ -555,7 +555,7 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
 @media(prefers-reduced-motion:reduce){.dbp.pop{animation:none}}
 </style>
 <style>
-/* Choose your Boi */
+/* Choose your Chibi */
 .pstyle{margin:10px 0 4px;text-align:center}
 .pstl{margin:0 0 6px;font-weight:800;font-size:.95rem}
 .pstg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-items:end}
@@ -566,6 +566,12 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
 .pstg button[aria-pressed="true"]{border-color:var(--red);box-shadow:0 3px 0 var(--redd);background:color-mix(in srgb,var(--red) 10%,var(--panel))}
 .pstm{margin:6px 0 0;font-size:.82rem;color:var(--mute)}
 #pet-big .pstimg{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
+.pctl{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.pctl button{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:9px 12px;border-radius:999px;border:2px solid var(--line);background:var(--panel);color:var(--ink);font-weight:800;font-size:.95rem;box-shadow:0 3px 0 rgba(0,0,0,.08);white-space:nowrap}
+.pctl button[hidden]{display:none}
+.pctl button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 3px 0 var(--redd)}
+.pctl button.go{grid-column:1/-1;background:var(--redd)!important;border-color:var(--redd)!important;color:#fff!important;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.pctl button:active{transform:translateY(2px);box-shadow:none}
 #pgPet.posed [data-a="acc"],#pgPet.posed [data-k],#pgPet.posed [data-w],#pgPet.posed #pgender,#pgPet.posed .ppicker:not(#ppicker){display:none!important}
 </style>
 <style>
@@ -640,7 +646,7 @@ body.on-pet #epet,body.on-pet #epet-show{display:none!important}
   <div id="pgPet" hidden>
     <section class="card pstage" aria-label="Chibi">
       <div class="pbox"><p id="pet-bub" class="pbub" role="status" hidden></p><button type="button" id="pet-big" aria-label="Chibi"></button></div>
-      <div class="pstyle" id="pStyle" role="group" aria-label="Choose your Boi"><p class="pstl">Choose your Boi</p><div class="pstg" id="pStyleGrid"></div><p class="pstm" id="pStyleMsg" role="status" aria-live="polite">Tap one, then press Save.</p></div><div class="pname"><label for="pname">Name tag</label><input id="pname" type="text" maxlength="12" placeholder="Boi" autocomplete="off" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
+      <div class="pstyle" id="pStyle" role="group" aria-label="Choose your Chibi"><p class="pstl">Choose your Chibi</p><div class="pstg" id="pStyleGrid"></div><p class="pstm" id="pStyleMsg" role="status" aria-live="polite">Tap one, then press Save.</p></div><div class="pname"><label for="pname">Name tag</label><input id="pname" type="text" maxlength="12" placeholder="Boi" autocomplete="off" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
       <div class="ppick" id="ppick" role="group" aria-label="Choose a pet"></div><div class="ppick"><button type="button" id="pallbtn" aria-pressed="false" aria-controls="pall">👀 All pets</button></div><div class="pall" id="pall" hidden></div><div class="ppick" id="pgender" role="group" aria-label="Boy or girl"><button type="button" data-g="chibi" aria-pressed="true">👦 Boy</button><button type="button" data-g="girl" aria-pressed="false">👧 Girl</button></div>
       <div class="pctl"><button type="button" data-a="fit">👕 Outfit</button><button type="button" data-a="acc">🎩 Accessory</button><button type="button" data-k="1" aria-pressed="false" hidden>💄 Makeup</button><button type="button" data-w="1" aria-pressed="false" hidden>💇 Wig</button><button type="button" id="psave" class="go">💾 Save</button></div>
       <div class="ppicker" id="ppicker" hidden></div><div class="ppicker" id="pmakeup" hidden></div><div class="ppicker" id="pwig" hidden></div><div class="ppicker" id="pwigArt" hidden></div>
@@ -1742,7 +1748,7 @@ function wgFace(m){var L=[85.6,75.4],R=[113.4,75.4],M=[99.5,86.4],K="#4b2f22",SK
   case "yawn":s+=eyesOff(dn)+mo(4.4,5.2,1);break;
   default:return ""}
  return s}
-function pxHead(hk,O,hd,m){if(pxWG()&&!isWK(O)){var h=window.WGA.head();if(h)return '<image href="'+h.s+'" x="'+h.x+'" y="'+h.y+'" width="'+h.w+'" height="'+h.h+'"/>'+wgFace(m)+pxMk(hk)+gAccSVG(1)}return '<image href="'+pxImg(hk,O)+'" x="'+hd[0]+'" y="'+hd[1]+'" width="'+hd[2]+'" height="'+hd[3]+'"/>'+(isWK(O)?"":pxMk(hk))+gAccSVG(0)}
+function pxHead(hk,O,hd,m){if(pxWG()&&!isWK(O)){var h=window.WGA.head();if(h)return '<image href="'+h.s+'" x="'+h.x+'" y="'+h.y+'" width="'+h.w+'" height="'+h.h+'"/>'+wgFace(m)+pxMk(hk)+gAccSVG(1)}return '<image href="'+pxImg(hk,O)+'" x="'+hd[0]+'" y="'+hd[1]+'" width="'+hd[2]+'" height="'+hd[3]+'"/>'+(isWK(O)?"":pxMk(hk))+(isWK(O)?'<g transform="translate(102.3 63.1) scale(.855) translate(-100.8 -75)">'+gAccSVG(0)+'</g>':gAccSVG(0))}
 function pxRedraw(){try{draw()}catch(e){}try{drawRoom()}catch(e){}}
 function isWK(o){return !!o&&o.id==="work"}
 function pxImg(key,o){if(isWK(o)&&WK[key])return WK[key];var t=pxTint(o),src=/^m\d$/.test(key)?PXM[key]:PXG[key];if(!t)return src;var ck=key+"|"+t.id;if(PXT[ck])return PXT[ck];
@@ -1770,7 +1776,7 @@ function pxMk(k){var P=PXK[k];if(!P||!isPXG()||typeof MK==="undefined")return ""
  return s}
 var _pupG=pup;
 pup=function(s){var k=SP[(S.sp|0)];if(!k||!k.img)return _pupG(s);
- var O=(s&&s.o)||OUT[S.oi],m=s.mood||"happy",eat=PXEAT>Date.now(),f=faceFor(m),
+ var O=(typeof SHYW!=="undefined"&&SHYW&&OUT.filter(function(x){return x.id==="work"})[0])||(s&&s.o)||OUT[S.oi],m=s.mood||"happy",eat=PXEAT>Date.now(),f=faceFor(m),
   pose=!eat&&m==="proud"&&!pxWG(),wv=!eat&&(!!s.wave||m==="wave"),
   hk=(eat||/^(excited|dance|surprised)$/.test(m))?"h2":/^(laugh|love|shy)$/.test(m)?"h3":"h1",
   tilt=m==="curious"?-7:m==="sassy"?5:m==="shy"?-4:m==="sad"?3:0,
@@ -1950,9 +1956,20 @@ function viewRoom(){var sc=el("div","rsw");sc.innerHTML=roomSVG();var bo=el("div
  panel.appendChild(el("p","bh2","Stars unlock decor. Tap an item to place it or take it out. You have "+S.stars+" \u2b50."));
  var g=el("div","rgd");ROOM.forEach(function(r){var un=r.u<=S.stars,b=el("button",hasR(r.id)?"on":null,un?r.n:"\ud83d\udd12 "+r.n+" \u00b7 "+r.u+" \u2b50");b.type="button";b.disabled=!un;b.onclick=function(){var i=S.rm.indexOf(r.id);if(i>=0)S.rm.splice(i,1);else S.rm.push(r.id);save();renderPanel()};g.appendChild(b)});panel.appendChild(g)}
 /* ===== Boi: Share card (X, Facebook, Instagram, anywhere) + animated GIF ===== */
+var SHYW=false;function shWork(){return GN==="girl"?OUT.filter(function(x){return x.id==="work"})[0]||null:null}
+/* the chibi's real look (what the Chibi tab shows right now) */
+function shCur(){var ca=(typeof CHA!=="undefined"&&CHA[CHS.a]&&!CHA[CHS.a].hid)?CHA[CHS.a]:{id:"none",n:"No accessory"};
+ if(GN==="chibi")return {o:{id:"chibi",n:CHO[CHS.o].n},a:ca};
+ if(GN==="girl")return {o:OUT[S.oi],a:ca};
+ return {o:OUT[S.oi],a:ACC[S.ai]}}
+/* girl: Delivery Uniform rides the yellow motor, other outfits stand (same as the Chibi page) */
+function shPup(s){var n=NOMOT,w=SHYW,rd=GN==="girl"&&isWK(s.o);SHYW=rd;
+ try{if(GN==="girl"){NOMOT=!rd;if(!rd&&(!s.mood||s.mood==="happy"))s=Object.assign({},s,{mood:"proud"})}return pupSVG(s)}finally{NOMOT=n;SHYW=w}}
 var SHARE_URL="https://serenedump.github.io/EngageDeliveryBoi/",shc=null,shg=null,shgP=null,shTok=0,shMode="png";
 var CF='"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif';
-function svgImg(svg,w,h){return new Promise(function(res,rej){var im=new Image();im.onload=function(){res(im)};im.onerror=rej;im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg.replace("<svg ",'<svg width="'+w+'" height="'+h+'" '))})}
+function svgImg(svg,w,h){var urls=(svg.match(/href="data:image[^"]+"/g)||[]).filter(function(v,i,x){return x.indexOf(v)===i});
+ var pre=Promise.all(urls.map(function(u){return new Promise(function(r){var im=new Image();im.onload=im.onerror=function(){r()};im.src=u.slice(6,-1);if(im.decode)im.decode().then(r,r)})}));
+ return pre.then(function(){return new Promise(function(res,rej){var im=new Image();im.onload=function(){try{var t=document.createElement("canvas");t.width=t.height=2;t.getContext("2d").drawImage(im,0,0,2,2)}catch(e){}setTimeout(function(){res(im)},40)};im.onerror=rej;im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg.replace("<svg ",'<svg width="'+w+'" height="'+h+'" '))})})}
 function shareKey(){var k=stats();return [S.oi,S.ai,S.stars,S.rm.join(","),k.streak,k.love,Object.keys(S.bd).sort().join(",")].join("|")}
 function shareText(){var k=stats();return PN+" and I have delivered "+k.love+" \u2b50"+(k.streak>1?" with a "+k.streak+"-day streak":"")+"! \ud83d\udef5 Delivering love, one engagement at a time."}
 function rrect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
@@ -1969,12 +1986,12 @@ function paintCard(c,room,boi,k){
  c.fillStyle="rgba(255,255,255,.88)";c.font="600 30px "+CF;c.fillText("serenedump.github.io/EngageDeliveryBoi",540,1020)}
 function buildCard(){var k=stats(),key=shareKey();
  if(shc&&shc.key===key)return Promise.resolve(shc.cv);
- return Promise.all([svgImg(roomSVG(),1020,578),svgImg(pupSVG({mood:"happy",wave:false,o:OUT[S.oi],a:ACC[S.ai].id}),540,540),Promise.resolve(loadFont()).catch(function(){})]).then(function(r){
+ return Promise.all([svgImg(roomSVG(),1020,578),svgImg(shPup({mood:"happy",wave:false,o:shCur().o,a:shCur().a.id}),540,540),Promise.resolve(loadFont()).catch(function(){})]).then(function(r){
   var cv=document.createElement("canvas");cv.width=cv.height=1080;paintCard(cv.getContext("2d"),r[0],r[1],k);
   shc={key:key,cv:cv,blob:null};try{cv.toBlob(function(b){if(shc&&shc.cv===cv)shc.blob=b},"image/png")}catch(e){}
   return cv})}
 /* --- animated GIF story: Boi changes outfits, badges pop in, then the stats card (no libraries) --- */
-function boiFrame(g,o,a,mood,blink){var p=(g%16)/16,T=Math.PI*2,tw=0,svg=pupSVG({mood:mood||"excited",wave:false,o:o,a:a});
+function boiFrame(g,o,a,mood,blink){var p=(g%16)/16,T=Math.PI*2,tw=0,svg=shPup({mood:mood||"excited",wave:false,o:o,a:a});
  return svg.replace('<g class="pq-all">','<g style="transform:translateY('+(-3.5*(1-Math.cos(T*p))).toFixed(2)+'px)">')
   .replace('<g class="pq-tail">','<g style="transform-origin:138px 160px;transform:rotate('+(1+8*Math.sin(2*T*p)).toFixed(2)+'deg)">')
   .replace(/<g class="bw">/g,'<g style="transform-box:fill-box;transform-origin:center;transform:rotate('+(540*p).toFixed(1)+'deg)">')
@@ -1986,11 +2003,7 @@ function lookName(l){return l.a&&l.a.id!=="none"?l.o.n+" \u00b7 "+l.a.n:l.o.n}
 function gifPlan(){
  var oo=OUT.filter(function(o){return o.u<=S.stars}),aa=ACC.filter(function(a){return a.u<=S.stars&&a.id!=="none"});
  if(!oo.length)oo=[OUT[0]];if(!aa.length)aa=[ACC[0]];
- var n=Math.min(5,Math.max(oo.length,aa.length)),looks=[],i,cur={o:OUT[S.oi],a:ACC[S.ai]};
- for(i=0;i<n;i++)looks.push({o:oo[i%oo.length],a:aa[i%aa.length]});
- var ci=-1;looks.forEach(function(l,j){if(l.o===cur.o&&l.a===cur.a)ci=j});
- if(ci>=0)looks=looks.slice(ci+1).concat(looks.slice(0,ci+1));else looks.push(cur);
- if(looks.length<2&&cur.a.id!=="none"){var nn=ACC.filter(function(a){return a.id==="none"})[0];if(nn)looks.unshift({o:cur.o,a:nn})}
+ var cur=shCur(),looks=[cur],i,wo=shWork();if(wo&&!isWK(cur.o))looks.push({o:wo,a:cur.a});
  var F=[],g=0;function add(d){d.g=g++;d.mood=d.mood||"excited";d.blink=(d.g%16===11);F.push(d);return d}
  looks.forEach(function(l,li){var nm=lookName(l);
   if(li>0){var pl=looks[li-1],pn=lookName(pl);
@@ -2337,7 +2350,7 @@ accessory=function(id){return GN==="girl"?wigSVG()+girlLayer()+_ac3(id)+girlBow(
  wb.onclick=function(){var o=pw.hidden;pw.hidden=!o;wb.setAttribute("aria-pressed",String(o));if(o)pick()};
  pg.addEventListener("click",function(){setTimeout(sync,0)});sync()})();
 window.WGAHOOK={redraw:function(){try{draw()}catch(e){}try{drawRoom()}catch(e){}},react:function(m,t,ms){try{react(m,t,ms)}catch(e){}}};
-var _pWA=pup;pup=function(s){var w=window.WGA;if(!w||GN!=="girl"||SLP||!w.on())return _pWA(s);var _n=NOMOT;NOMOT=true;try{return _pWA(s)}finally{NOMOT=_n}};
+var _pWA=pup;pup=function(s){var w=window.WGA;if(!w||GN!=="girl"||SLP||!w.on()||(typeof SHYW!=="undefined"&&SHYW))return _pWA(s);var _n=NOMOT;NOMOT=true;try{return _pWA(s)}finally{NOMOT=_n}};
 var _skWA=shareKey;shareKey=function(){return _skWA()+(window.WGA&&GN==="girl"&&!SLP?window.WGA.key():"")};
 (function(){var pg=$("pgender"),mb=document.querySelector("#pgPet [data-k]"),pm=$("pmakeup");if(!pg||!mb||!pm)return;
  function mkPick(){pm.textContent="";var nx=null;MK.forEach(function(m){if(m.u>S.stars&&(!nx||m.u<nx.u))nx=m});
@@ -3031,7 +3044,7 @@ scarf:function(){return '<g>'
 
 /* ===== Chibi Boi: the new default look (outfit tint, hairstyles, accessories) ===== */
 var CHNAMES=["Original Messy","Messy Spikes","Soft Side Part","Short Crop","Curtain Bangs","Wavy Swoop","Fluffy Mess","Slick Side","Spiky Fade","Long Part","Textured Crop","Man Bun","Tousled"];
-var CHA=[{id:"none",n:"No accessory",u:0},{id:"helmet",n:"Rider Helmet",u:0,hid:1},{id:"cap",n:"Blue Cap",u:2,hid:1},{id:"sunshades",n:"Sunshades",u:4},{id:"specs",n:"Round Glasses",u:5},{id:"star",n:"Star Clip",u:7},{id:"phones",n:"Headphones",u:8},{id:"beanie",n:"Red Beanie",u:10,hid:1},{id:"scarf",n:"Red Scarf",u:12},{id:"clipheart",n:"Heart Clip",u:0,g:1},{id:"clipflower",n:"Flower Clip",u:0,g:1},{id:"clipbow",n:"Bow Clip",u:0,g:1},{id:"clipbutter",n:"Butterfly Clip",u:0,g:1}];
+var CHA=[{id:"none",n:"No accessory",u:0},{id:"helmet",n:"Rider Helmet",u:0,hid:1},{id:"cap",n:"Blue Cap",u:2,hid:1},{id:"sunshades",n:"Sunshades",u:4},{id:"specs",n:"Round Glasses",u:5},{id:"star",n:"Star Clip",u:7},{id:"phones",n:"Headphones",u:8,hid:1},{id:"beanie",n:"Red Beanie",u:10,hid:1},{id:"scarf",n:"Red Scarf",u:12},{id:"clipheart",n:"Heart Clip",u:0,g:1},{id:"clipflower",n:"Flower Clip",u:0,g:1},{id:"clipbow",n:"Bow Clip",u:0,g:1},{id:"clipbutter",n:"Butterfly Clip",u:0,g:1}];
 var CHHC=[{n:"Original",c:"#2b1b12"},{n:"Chestnut",c:"#8a5a34",h:25,s:.55,m:1,a:.2},{n:"Blonde",c:"#e6c15a",h:44,s:.8,m:1,a:.4},{n:"Ginger",c:"#d9622b",h:19,s:.85,m:1,a:.22},{n:"Pink",c:"#ff8fb8",h:338,s:.85,m:1,a:.4},{n:"Blue",c:"#4a78e0",h:221,s:.75,m:1,a:.24},{n:"Purple",c:"#8a5ee0",h:268,s:.65,m:1,a:.24},{n:"Green",c:"#3fae6a",h:145,s:.6,m:1,a:.22},{n:"Silver",c:"#c9ccd6",h:228,s:.1,m:1,a:.52}];
 var CHKEY="boi-chibi-v1",CHS={h:0,o:0,a:0,c:0},CHPV={o:null,a:null},CHCV={},CHPEND={},CHT=0;
 function chW(){return window.CHBW||[]}
@@ -4466,6 +4479,12 @@ var pg=$("pgender");if(pg)pg.addEventListener("click",function(){setTimeout(func
 var sg=$("pStyleGrid");if(sg)sg.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(!b)return;var idx=[].indexOf.call(sg.children,b);if(idx>0&&ST.i>=0){ST.i=-1;store();apply();render()}},true);
 box.hidden=pw.hidden||!girl();apply();
 })();
+</script>
+<script>
+/* Chibi tab: one panel at a time (Outfit / Accessory / Makeup / Hair). Opening one closes the others. */
+(function(){var busy=false,SEL="#pgPet .pctl button[data-a],#pgPet .pctl button[data-k],#pgPet .pctl button[data-w]";
+ document.addEventListener("click",function(e){if(busy)return;var b=e.target.closest&&e.target.closest(SEL);if(!b)return;
+  busy=true;try{document.querySelectorAll(SEL).forEach(function(o){if(o!==b&&o.getAttribute("aria-pressed")==="true")o.click()})}finally{busy=false}},true)})();
 </script>
 </body>
 </html>
